@@ -1,7 +1,18 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
-  "files": { "ignore": [".next", "out", "dist", "node_modules", "coverage", "playwright-report", "test-results", "public"] },
+  "files": {
+    "ignore": [
+      ".next",
+      "out",
+      "dist",
+      "node_modules",
+      "coverage",
+      "playwright-report",
+      "test-results",
+      "public"
+    ]
+  },
   "organizeImports": { "enabled": true },
   "formatter": {
     "enabled": true,
