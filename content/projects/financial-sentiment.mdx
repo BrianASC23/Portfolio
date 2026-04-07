@@ -1,0 +1,34 @@
+---
+slug: financial-sentiment
+title: Financial News Sentiment RNN
+tagline: PyTorch RNN that predicts next-day stock direction from headline sentiment
+summary: >-
+  An end-to-end pipeline that scrapes financial headlines, fine-tunes an LSTM sentiment classifier, and backtests a long/short strategy against historical S&P 500 prices.
+role: Research project
+timeframe: "2024"
+status: shipped
+featured: true
+order: 2
+stack: [Python, PyTorch, Pandas, Hugging Face, Jupyter]
+tags: [ai-ml, data]
+links:
+  github: https://github.com/BrianASC23/financial-sentiment
+cover:
+  src: /projects/financial-sentiment/cover.jpg
+  alt: Sentiment classification confusion matrix
+metrics:
+  - { label: Test accuracy, value: "81%" }
+  - { label: Headlines scraped, value: "50k+" }
+  - { label: Sharpe (backtest), value: "1.3" }
+---
+
+## Pipeline
+
+1. Scraper collects 50k+ headlines tagged with ticker symbols.
+2. Tokenizer + embedding layer feeds an LSTM classifier fine-tuned on FinBERT-labeled data.
+3. Daily sentiment score joins to historical OHLC data for backtesting.
+
+## What I learned
+
+Sentiment alone is nowhere near sufficient alpha — but the infra to build, train, and evaluate
+a model end-to-end transferred to everything I've done since.

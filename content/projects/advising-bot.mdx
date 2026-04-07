@@ -1,0 +1,45 @@
+---
+slug: advising-bot
+title: Advising Bot
+tagline: A RAG agent that replaces your Stony Brook academic advisor
+summary: >-
+  A retrieval-augmented chatbot built on LangGraph and Pinecone that ingests the entire Stony Brook course bulletin and answers degree planning, prerequisite, and scheduling questions with source-grounded citations.
+role: Solo builder
+timeframe: 2025 – present
+status: in-progress
+featured: true
+order: 1
+stack: [Python, LangGraph, Pinecone, OpenAI, FastAPI, Next.js]
+tags: [ai-ml, backend]
+links:
+  github: https://github.com/BrianASC23/advising-bot
+cover:
+  src: /projects/advising-bot/cover.jpg
+  alt: Advising Bot chat interface
+metrics:
+  - { label: Bulletin pages indexed, value: "2,400+" }
+  - { label: Mean answer latency, value: "<1.8s" }
+  - { label: Retrieval recall@5, value: "92%" }
+---
+
+## The problem
+
+Stony Brook's course bulletin is 2,400+ pages of prerequisites, degree plans, upper-division
+requirements, and corner cases. Academic advising appointments have a ~3 week wait time.
+Students need answers in minutes, not weeks.
+
+## What I built
+
+An end-to-end RAG agent stack:
+
+- **Ingestion.** Scrapes the public bulletin into structured Markdown with section-anchored
+  metadata (department, course number, level).
+- **Retrieval.** Pinecone namespaces per department + HyDE query rewriting.
+- **Planning.** A LangGraph orchestrator with a planner → retriever → verifier → answer loop.
+- **Grounding.** Every answer surfaces the exact bulletin section it cites.
+
+## Why it matters
+
+Beyond the GPA-math tricks, this is the clearest expression of what I want to do: take an
+unstructured, high-stakes domain and turn it into a system that a real person would actually
+trust with a real decision.

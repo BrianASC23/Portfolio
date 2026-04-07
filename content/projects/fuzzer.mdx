@@ -1,0 +1,28 @@
+---
+slug: fuzzer
+title: Coverage-guided Fuzzer
+tagline: A tiny AFL-style fuzzer written from scratch in C
+summary: >-
+  A mutation-based fuzzer with edge-coverage feedback, corpus minimization, and crash deduplication — built to understand, not to replace, AFL++.
+role: Systems learning project
+timeframe: 2026 – present
+status: in-progress
+featured: true
+order: 4
+stack: [C]
+tags: [systems, devtools]
+cover:
+  src: /projects/fuzzer/cover.jpg
+  alt: Fuzzer terminal output
+---
+
+## Why
+
+I wanted to internalize what a fuzzer actually does — not just run `afl-fuzz` and pray.
+Writing one from scratch forced me to think about instrumentation, shared-memory IPC, and
+deterministic replay of a corpus.
+
+## Status
+
+In-progress. Edge coverage and the basic mutation engine work today. Next up: forkserver and
+persistent mode.

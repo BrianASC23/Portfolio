@@ -1,0 +1,28 @@
+---
+slug: custom-heap
+title: Custom Heap Allocator
+tagline: An explicit free-list allocator with boundary tags and coalescing
+summary: >-
+  A replacement for malloc/free built on top of mmap, using explicit free lists, boundary tags, and immediate coalescing. Benchmarked against glibc malloc on a mixed workload.
+role: Systems learning project
+timeframe: "2025"
+status: shipped
+featured: false
+order: 5
+stack: [C]
+tags: [systems]
+cover:
+  src: /projects/custom-heap/cover.jpg
+  alt: Heap layout diagram
+---
+
+## Design
+
+- Explicit free list with LIFO insertion
+- Boundary-tagged blocks for O(1) coalescing
+- First-fit placement with a splitting threshold
+
+## Takeaway
+
+Beat glibc on the specific workload I tuned for, lost badly on everything else. A good
+reminder that "general-purpose" allocators earn their complexity.

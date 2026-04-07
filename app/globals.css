@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@theme {
+  /* Color tokens — oklch for perceptual uniformity */
+  --color-bg: oklch(0.16 0.01 60);
+  --color-bg-elevated: oklch(0.2 0.012 60);
+  --color-bg-inset: oklch(0.13 0.009 60);
+  --color-fg: oklch(0.97 0.005 80);
+  --color-fg-muted: oklch(0.72 0.015 70);
+  --color-fg-subtle: oklch(0.55 0.013 70);
+  --color-border: oklch(0.26 0.01 60 / 0.6);
+  --color-border-strong: oklch(0.32 0.012 60);
+  --color-accent: oklch(0.78 0.16 75);
+  --color-accent-hi: oklch(0.85 0.17 80);
+  --color-accent-lo: oklch(0.62 0.13 70);
+  --color-accent-glow: oklch(0.78 0.16 75 / 0.35);
+
+  /* Radii */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+
+  /* Typography families (wired from next/font variables) */
+  --font-family-serif: var(--font-serif), Georgia, ui-serif, serif;
+  --font-family-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-family-mono: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
+
+  /* Fluid type scale (clamped for modern browsers) */
+  --text-display: clamp(3rem, 2rem + 5vw, 6.5rem);
+  --text-h1: clamp(2.25rem, 1.6rem + 3.2vw, 4rem);
+  --text-h2: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+  --text-h3: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-micro: 0.75rem;
+
+  /* Shadows */
+  --shadow-glow: 0 0 40px -8px var(--color-accent-glow);
+  --shadow-card: 0 1px 0 0 oklch(1 0 0 / 0.04) inset, 0 20px 60px -30px oklch(0 0 0 / 0.6);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-family-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Global reduced-motion override */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Utility: hide native cursor when custom cursor is active */
+.cursor-none,
+.cursor-none * {
+  cursor: none !important;
+}
+
+/* Grid background helper (used by Hero, Sections) */
+.bg-grid {
+  background-image: linear-gradient(to right, var(--color-border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
