@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# Production / build
+build/
+dist/
+
+# Vercel
+.vercel/
+
+# Environment
+.env
+.env*.local
+
+# Testing
+playwright-report/
+test-results/
+coverage/
+.nyc_output/
+
+# Superpowers brainstorming mockups (kept out of git)
+.superpowers/
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# TypeScript build info
+*.tsbuildinfo
