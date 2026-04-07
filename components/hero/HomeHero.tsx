@@ -1,16 +1,8 @@
-'use client';
-
 import { FadeIn } from '@/components/motion/FadeIn';
 import { Reveal } from '@/components/motion/Reveal';
 import { Button } from '@/components/primitives/Button';
 import { Container } from '@/components/primitives/Container';
-import dynamic from 'next/dynamic';
-import { HeroStaticFallback } from './HeroStaticFallback';
-
-const Hero3DCanvas = dynamic(() => import('./Hero3DCanvas'), {
-  ssr: false,
-  loading: () => <HeroStaticFallback />,
-});
+import { PixelHero } from './PixelHero';
 
 export function HomeHero() {
   return (
@@ -20,12 +12,9 @@ export function HomeHero() {
       aria-label="Introduction"
     >
       <div className="absolute inset-0 bg-grid opacity-30" aria-hidden="true" />
-      <div className="absolute inset-0">
-        <Hero3DCanvas />
-      </div>
 
       <Container className="relative z-10">
-        <div className="grid gap-8 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+        <div className="grid items-center gap-8 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
           <div className="max-w-[20ch]">
             <p className="mb-6 font-mono text-[11px] text-[var(--color-fg-subtle)] uppercase tracking-[0.18em]">
               Portfolio · 01
@@ -48,6 +37,11 @@ export function HomeHero() {
               <Button href="/#contact" variant="secondary">
                 Get in touch
               </Button>
+            </FadeIn>
+          </div>
+          <div className="hidden items-center justify-center md:flex">
+            <FadeIn delay={0.4}>
+              <PixelHero className="h-auto w-64 lg:w-80" />
             </FadeIn>
           </div>
         </div>
