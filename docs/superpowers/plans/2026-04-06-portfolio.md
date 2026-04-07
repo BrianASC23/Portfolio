@@ -153,7 +153,7 @@ git -c user.name="Brian Cao" -c user.email="brianc40722@gmail.com" commit -m "ch
 - [ ] **Step 1: Install runtime dependencies**
 
 ```bash
-pnpm add framer-motion@^11 lenis@^1 @react-three/fiber@^9 @react-three/drei@^10 three@^0.169 cmdk@^1 @use-gesture/react@^10 zod@^3 next-mdx-remote@^5 remark-gfm@^4 rehype-slug@^6 rehype-autolink-headings@^7 shiki@^1 gray-matter@^4 reading-time@^1 fast-xml-parser@^4 resend@^4 @vercel/analytics@^1 @vercel/speed-insights@^1 @vercel/og@^0.6 satori@^0.12 clsx@^2 tailwind-merge@^2
+pnpm add framer-motion@^11 lenis@^1 @react-three/fiber@^9 @react-three/drei@^10 three@^0.169 cmdk@^1 @use-gesture/react@^10 zod@^3 next-mdx-remote@^6 remark-gfm@^4 rehype-slug@^6 rehype-autolink-headings@^7 shiki@^1 gray-matter@^4 reading-time@^1 fast-xml-parser@^4 resend@^4 @vercel/analytics@^1 @vercel/speed-insights@^1 @vercel/og@^0.6 satori@^0.12 clsx@^2 tailwind-merge@^2
 ```
 
 - [ ] **Step 2: Install dev dependencies**
