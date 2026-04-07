@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Brian Cao — Portfolio
 
-## Getting Started
+Personal portfolio for [Brian Cao](https://github.com/BrianASC23) — a full-stack engineer and Stony Brook CS Honors student. Dark-tech aesthetic with an R3F shader hero, MDX-driven case studies, and a Medium-fed writing feed.
 
-First, run the development server:
+## Stack
+
+- **Framework:** Next.js 15 App Router · React 19 · TypeScript strict
+- **Styling:** Tailwind CSS v4 (`@theme`) · OKLCH color space · self-hosted fonts
+- **Content:** File-based MDX with Zod-validated frontmatter · Medium RSS
+- **Motion:** Framer Motion · Lenis smooth scroll · @react-three/fiber
+- **Testing:** Vitest · Playwright · axe-core · Lighthouse CI
+- **Deploy:** Vercel
+
+## Local development
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.example .env.local
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | What it does |
+| --- | --- |
+| `pnpm dev` | Next.js dev server with Turbopack |
+| `pnpm build` | Production build |
+| `pnpm start` | Serve production build |
+| `pnpm lint` | Biome lint + format check |
+| `pnpm lint:fix` | Auto-fix lint & formatting |
+| `pnpm typecheck` | `tsc --noEmit` |
+| `pnpm test` | Vitest unit tests |
+| `pnpm test:e2e` | Playwright E2E suite |
 
-## Learn More
+## Content
 
-To learn more about Next.js, take a look at the following resources:
+- **Projects:** add MDX files in `content/projects/`. Frontmatter is validated by `lib/schemas/project.ts`.
+- **Experience:** add MDX files in `content/experience/`.
+- **Bio & toolbelt:** edit `content/site/bio.mdx` and `content/site/toolbelt.json`.
+- **Writing:** posts are pulled from Medium via RSS. No local authoring.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Architecture notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Sections are dumb presenters.** They never import each other. Pages compose them.
+- **Primitives consume tokens.** No raw hex values outside `globals.css`.
+- **Content loaders are the only filesystem touch-points for MDX.**
+- **R3F canvas is dynamic-imported behind a static fallback** to protect LCP.
+- **Every animated component has a reduced-motion fallback.**
 
-## Deploy on Vercel
+## Deploying
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Push to `main`. Vercel auto-deploys the production branch. Preview deploys run for every PR.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Environment variables required in production (set in Vercel dashboard):
+
+- `NEXT_PUBLIC_SITE_URL`
+- `NEXT_PUBLIC_MEDIUM_FEED`
+- `RESEND_API_KEY`
+- `CONTACT_TO_EMAIL`
+- `CONTACT_FROM_EMAIL`
+
+## License
+
+MIT — see [LICENSE](./LICENSE).
