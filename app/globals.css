@@ -84,12 +84,6 @@ body {
   }
 }
 
-/* Utility: hide native cursor when custom cursor is active */
-.cursor-none,
-.cursor-none * {
-  cursor: none !important;
-}
-
 /* Grid background helper (used by Hero, Sections) */
 .bg-grid {
   background-image: linear-gradient(to right, var(--color-border) 1px, transparent 1px),
