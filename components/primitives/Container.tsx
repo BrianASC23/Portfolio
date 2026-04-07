@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils/cn';
-import type { ElementType, HTMLAttributes, ReactNode } from 'react';
+import { type ElementType, type HTMLAttributes, type ReactNode, createElement } from 'react';
 
 type ContainerSize = 'narrow' | 'default' | 'wide' | 'bleed';
 
@@ -23,12 +23,12 @@ export function Container({
   children,
   ...rest
 }: ContainerProps) {
-  return (
-    <Tag
-      className={cn('mx-auto w-full px-6 md:px-8 lg:px-12', sizeClasses[size], className)}
-      {...rest}
-    >
-      {children}
-    </Tag>
+  return createElement(
+    Tag,
+    {
+      className: cn('mx-auto w-full px-6 md:px-8 lg:px-12', sizeClasses[size], className),
+      ...rest,
+    },
+    children,
   );
 }

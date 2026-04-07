@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils/cn';
-import type { ElementType, HTMLAttributes, ReactNode } from 'react';
+import { type ElementType, type HTMLAttributes, type ReactNode, createElement } from 'react';
 
 type Tone = 'default' | 'muted' | 'subtle' | 'accent';
 type Size = 'body' | 'small' | 'micro' | 'lead';
@@ -35,17 +35,17 @@ export function Text({
   children,
   ...rest
 }: TextProps) {
-  return (
-    <Tag
-      className={cn(
+  return createElement(
+    Tag,
+    {
+      className: cn(
         toneClasses[tone],
         sizeClasses[size],
         mono ? 'font-mono' : 'font-sans',
         className,
-      )}
-      {...rest}
-    >
-      {children}
-    </Tag>
+      ),
+      ...rest,
+    },
+    children,
   );
 }
