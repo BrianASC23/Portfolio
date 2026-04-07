@@ -1,0 +1,7 @@
+{
+  "languages": ["TypeScript", "Python", "C/C++", "Java", "SQL", "OCaml", "R"],
+  "frontend": ["Next.js 15", "React 19", "Tailwind v4", "Framer Motion", "R3F"],
+  "backend": ["Node.js", "Flask", "PostgreSQL", "Neo4j", "AWS"],
+  "aiml": ["PyTorch", "Hugging Face", "LangGraph", "Pinecone"],
+  "tools": ["Git", "Biome", "Vitest", "Playwright", "Vercel"]
+}
