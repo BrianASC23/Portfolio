@@ -38,10 +38,10 @@ function chamberVariants(index: number): Variants {
   const start = CHAMBER_STARTS[index]!;
   return {
     // SSR-safe: fully visible so there is no layout shift on initial/held
-    initial: { scaleY: 1, originY: '100%' },
+    initial: { scaleY: 1, originY: 1 },
     playing: {
       scaleY: [0, 1],
-      originY: '100%',
+      originY: 1,
       transition: {
         delay: start,
         duration: CHAMBER_FILL_DURATION,
@@ -49,7 +49,7 @@ function chamberVariants(index: number): Variants {
         times: [0, 1],
       },
     },
-    held: { scaleY: 1, originY: '100%' },
+    held: { scaleY: 1, originY: 1 },
   };
 }
 
