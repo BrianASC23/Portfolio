@@ -21,7 +21,7 @@ describe('brain-hero timeline', () => {
       T.SUPPORTING_CONTENT_START,
     ];
     for (let i = 1; i < series.length; i++) {
-      expect(series[i]).toBeGreaterThan(series[i - 1]);
+      expect(series[i]!).toBeGreaterThan(series[i - 1]!);
     }
   });
 

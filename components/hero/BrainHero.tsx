@@ -37,9 +37,9 @@ export function BrainHero({ phase, className }: BrainHeroProps) {
         <clipPath id="brain-clip">
           <path d={BRAIN_OUTLINE_PATH} />
         </clipPath>
-        <linearGradient id="fluid-gradient" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0%" stopColor="var(--color-accent-lo)" />
-          <stop offset="100%" stopColor="var(--color-accent-hi)" />
+        <linearGradient id="fluid-gradient" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="var(--color-accent-hi)" />
+          <stop offset="100%" stopColor="var(--color-accent-lo)" />
         </linearGradient>
       </defs>
 
@@ -111,7 +111,6 @@ export function BrainHero({ phase, className }: BrainHeroProps) {
         fontFamily="var(--font-serif), Georgia, serif"
         fontSize={36}
         fill="var(--color-accent)"
-        opacity={1}
         style={{ filter: 'drop-shadow(0 0 12px var(--color-accent-glow))' }}
       >
         Brian <tspan fontStyle="italic">Cao</tspan>

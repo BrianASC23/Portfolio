@@ -23,7 +23,7 @@ describe('BrainHero — held state', () => {
     const rects = container.querySelectorAll('[data-fluid-chamber]');
     expect(rects).toHaveLength(CHAMBERS.length);
     rects.forEach((rect, i) => {
-      const chamber = CHAMBERS[i];
+      const chamber = CHAMBERS[i]!;
       expect(Number(rect.getAttribute('y'))).toBe(chamber.y0);
       expect(Number(rect.getAttribute('height'))).toBe(chamber.y1 - chamber.y0);
     });

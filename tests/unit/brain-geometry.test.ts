@@ -18,9 +18,9 @@ describe('brain-geometry', () => {
 
   it('chambers have monotonically increasing y ranges covering the vessel', () => {
     for (let i = 0; i < CHAMBERS.length; i++) {
-      expect(CHAMBERS[i].y0).toBeLessThan(CHAMBERS[i].y1);
+      expect(CHAMBERS[i]!.y0).toBeLessThan(CHAMBERS[i]!.y1);
       if (i > 0) {
-        expect(CHAMBERS[i].y0).toBeGreaterThanOrEqual(CHAMBERS[i - 1].y1);
+        expect(CHAMBERS[i]!.y0).toBeGreaterThanOrEqual(CHAMBERS[i - 1]!.y1);
       }
     }
   });
