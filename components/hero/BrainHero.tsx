@@ -1,6 +1,17 @@
 'use client';
 
+import { type Variants, motion } from 'framer-motion';
 import { BRAIN_OUTLINE_PATH, CHAMBERS, NAME_ANCHOR, VIEWBOX } from './brain-geometry';
+import {
+  BRAIN_STROKE_DURATION,
+  BRAIN_STROKE_START,
+  CHAMBER_FILL_DURATION,
+  CHAMBER_STARTS,
+  HONEY_EASE,
+  NAME_OPACITY_STEPS,
+  PULSE_DURATION,
+  PULSE_START,
+} from './timeline';
 import type { HeroPhase } from './useHeroPhase';
 
 interface BrainHeroProps {
@@ -8,12 +19,89 @@ interface BrainHeroProps {
   className?: string;
 }
 
+const EASE_OUT = [0.16, 1, 0.3, 1] as const;
+
+const strokeVariants: Variants = {
+  initial: { opacity: 0.5 }, // SSR-safe: matches held so no flash
+  playing: {
+    opacity: [0, 0.5],
+    transition: {
+      delay: BRAIN_STROKE_START,
+      duration: BRAIN_STROKE_DURATION,
+      ease: EASE_OUT as unknown as number[],
+    },
+  },
+  held: { opacity: 0.5 },
+};
+
+function chamberVariants(index: number): Variants {
+  const start = CHAMBER_STARTS[index]!;
+  return {
+    // SSR-safe: fully visible so there is no layout shift on initial/held
+    initial: { scaleY: 1, originY: '100%' },
+    playing: {
+      scaleY: [0, 1],
+      originY: '100%',
+      transition: {
+        delay: start,
+        duration: CHAMBER_FILL_DURATION,
+        ease: HONEY_EASE as unknown as [number, number, number, number],
+        times: [0, 1],
+      },
+    },
+    held: { scaleY: 1, originY: '100%' },
+  };
+}
+
+function chamberLabelVariants(index: number): Variants {
+  const start = CHAMBER_STARTS[index]! + 0.2;
+  return {
+    initial: { opacity: 0 },
+    playing: {
+      opacity: [0, 1, 1, 0],
+      transition: { delay: start, duration: 1.0, times: [0, 0.2, 0.6, 1] },
+    },
+    held: { opacity: 0 },
+  };
+}
+
+const PULSE_TOTAL = PULSE_START + PULSE_DURATION;
+const nameVariants: Variants = {
+  initial: { opacity: 1, scale: 1 }, // SSR-safe: lit so no shift
+  playing: {
+    opacity: [
+      NAME_OPACITY_STEPS[0]!,
+      NAME_OPACITY_STEPS[0]!,
+      NAME_OPACITY_STEPS[1]!,
+      NAME_OPACITY_STEPS[2]!,
+      NAME_OPACITY_STEPS[3]!,
+      1,
+      1,
+    ],
+    scale: [1, 1, 1, 1, 1, 1.02, 1],
+    transition: {
+      duration: PULSE_TOTAL,
+      times: [
+        0,
+        CHAMBER_STARTS[0]! / PULSE_TOTAL,
+        CHAMBER_STARTS[1]! / PULSE_TOTAL,
+        CHAMBER_STARTS[2]! / PULSE_TOTAL,
+        CHAMBER_STARTS[3]! / PULSE_TOTAL,
+        PULSE_START / PULSE_TOTAL,
+        1,
+      ],
+    },
+  },
+  held: { opacity: 1, scale: 1 },
+};
+
 /**
- * SVG brain vessel. Controlled entirely by the `phase` prop:
- *  - `initial` and `held` render the fluid at full height (SSR-safe).
- *  - `playing` additionally sets data-motion="playing" so CSS can run
- *    the wobble and Framer Motion variants (added in Task 4) can
- *    animate the fill.
+ * SVG brain vessel. Controlled by the `phase` prop:
+ *  - `initial` and `held` render identically (fluid full, outline visible, name lit)
+ *    so the server HTML and the reduced-motion fallback are indistinguishable from
+ *    the final rest state. This prevents a hydration flash.
+ *  - `playing` drives Framer Motion variants that animate the stroke fade-in,
+ *    chamber fills, chamber-label glows, and a name pulse.
  */
 export function BrainHero({ phase, className }: BrainHeroProps) {
   const isPlaying = phase === 'playing';
@@ -44,18 +132,21 @@ export function BrainHero({ phase, className }: BrainHeroProps) {
       </defs>
 
       {/* Brain outline stroke */}
-      <path
+      <motion.path
         d={BRAIN_OUTLINE_PATH}
         fill="none"
         stroke="oklch(0.7 0.01 60 / 0.5)"
         strokeWidth={1.5}
         data-brain-outline
+        variants={strokeVariants}
+        initial="initial"
+        animate={phase}
       />
 
       {/* Fluid rects clipped to the brain silhouette, one per chamber */}
       <g clipPath="url(#brain-clip)" data-fluid-group>
-        {CHAMBERS.map((c) => (
-          <rect
+        {CHAMBERS.map((c, i) => (
+          <motion.rect
             key={c.id}
             data-fluid-chamber={c.id}
             x={0}
@@ -64,6 +155,9 @@ export function BrainHero({ phase, className }: BrainHeroProps) {
             height={c.y1 - c.y0}
             fill="url(#fluid-gradient)"
             opacity={0.85}
+            variants={chamberVariants(i)}
+            initial="initial"
+            animate={phase}
           />
         ))}
       </g>
@@ -84,9 +178,8 @@ export function BrainHero({ phase, className }: BrainHeroProps) {
       </g>
 
       {/* Chamber labels — decorative, aria-hidden */}
-      {CHAMBERS.map((c) => (
-        // biome-ignore lint/a11y/noAriaHiddenOnFocusable: SVG <text> is not focusable; this is purely decorative
-        <text
+      {CHAMBERS.map((c, i) => (
+        <motion.text
           key={`label-${c.id}`}
           data-chamber-label={c.id}
           aria-hidden="true"
@@ -96,14 +189,16 @@ export function BrainHero({ phase, className }: BrainHeroProps) {
           fontFamily="var(--font-mono), ui-monospace, monospace"
           fontSize={9}
           fill="var(--color-accent)"
-          opacity={0}
+          variants={chamberLabelVariants(i)}
+          initial="initial"
+          animate={phase}
         >
           {c.label}
-        </text>
+        </motion.text>
       ))}
 
       {/* Etched name */}
-      <text
+      <motion.text
         data-brain-name
         x={NAME_ANCHOR.x}
         y={NAME_ANCHOR.y}
@@ -112,9 +207,12 @@ export function BrainHero({ phase, className }: BrainHeroProps) {
         fontSize={36}
         fill="var(--color-accent)"
         style={{ filter: 'drop-shadow(0 0 12px var(--color-accent-glow))' }}
+        variants={nameVariants}
+        initial="initial"
+        animate={phase}
       >
         Brian <tspan fontStyle="italic">Cao</tspan>
-      </text>
+      </motion.text>
     </svg>
   );
 }

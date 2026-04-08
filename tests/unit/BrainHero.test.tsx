@@ -43,3 +43,22 @@ describe('BrainHero — held state', () => {
     labels.forEach((el) => expect(el.getAttribute('aria-hidden')).toBe('true'));
   });
 });
+
+describe('BrainHero — playing state', () => {
+  it('sets data-motion="playing" on the svg', () => {
+    const { container } = render(<BrainHero phase="playing" />);
+    expect(container.querySelector('svg')?.getAttribute('data-motion')).toBe('playing');
+  });
+
+  it('sets data-motion="static" on initial and held phases', () => {
+    const { container: c1 } = render(<BrainHero phase="initial" />);
+    expect(c1.querySelector('svg')?.getAttribute('data-motion')).toBe('static');
+    const { container: c2 } = render(<BrainHero phase="held" />);
+    expect(c2.querySelector('svg')?.getAttribute('data-motion')).toBe('static');
+  });
+
+  it('still renders all fluid chambers in the playing state (framer motion applies animations, not removals)', () => {
+    const { container } = render(<BrainHero phase="playing" />);
+    expect(container.querySelectorAll('[data-fluid-chamber]')).toHaveLength(4);
+  });
+});
