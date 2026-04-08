@@ -44,8 +44,8 @@ describe('useHeroPhase', () => {
     expect(sessionStorage.getItem('bc:brain-hero-played')).toBe('1');
   });
 
-  it('starts in initial on the first render (pre-effect) then transitions', () => {
+  it('transitions to playing on a fresh mount with motion enabled', async () => {
     const { result } = renderHook(() => useHeroPhase());
-    expect(['initial', 'playing', 'held']).toContain(result.current);
+    await waitFor(() => expect(result.current).toBe('playing'));
   });
 });

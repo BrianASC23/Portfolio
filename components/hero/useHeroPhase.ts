@@ -25,6 +25,12 @@ export function useHeroPhase(): HeroPhase {
   useEffect(() => {
     if (reduced) {
       setPhase('held');
+      // Clear any flag left by a transient reduced=false first render.
+      // useReducedMotion initializes synchronously to `false` and only
+      // reads matchMedia inside its own useEffect, so this effect can
+      // fire once with reduced=false (writing the flag) before firing
+      // again with reduced=true. Without this cleanup, a user who later
+      // disables reduced motion would be stuck on the held state.
       try {
         sessionStorage.removeItem(SESSION_KEY);
       } catch {
@@ -32,7 +38,7 @@ export function useHeroPhase(): HeroPhase {
       }
       return;
     }
-    if (typeof window !== 'undefined' && sessionStorage.getItem(SESSION_KEY)) {
+    if (sessionStorage.getItem(SESSION_KEY)) {
       setPhase('held');
       return;
     }
