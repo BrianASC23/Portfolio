@@ -1,6 +1,7 @@
 'use client';
 
 import { type Variants, motion } from 'framer-motion';
+import styles from './BrainHero.module.css';
 import { BRAIN_OUTLINE_PATH, CHAMBERS, NAME_ANCHOR, VIEWBOX } from './brain-geometry';
 import {
   BRAIN_STROKE_DURATION,
@@ -144,7 +145,7 @@ export function BrainHero({ phase, className }: BrainHeroProps) {
       />
 
       {/* Fluid rects clipped to the brain silhouette, one per chamber */}
-      <g clipPath="url(#brain-clip)" data-fluid-group>
+      <g clipPath="url(#brain-clip)" data-fluid-group className={styles.fluidWobble}>
         {CHAMBERS.map((c, i) => (
           <motion.rect
             key={c.id}

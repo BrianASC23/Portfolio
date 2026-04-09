@@ -62,3 +62,11 @@ describe('BrainHero — playing state', () => {
     expect(container.querySelectorAll('[data-fluid-chamber]')).toHaveLength(4);
   });
 });
+
+describe('BrainHero — wobble', () => {
+  it('fluid group has the wobble class so the CSS keyframe can target it', () => {
+    const { container } = render(<BrainHero phase="playing" />);
+    const group = container.querySelector('[data-fluid-group]');
+    expect(group?.getAttribute('class')).toMatch(/wobble/i);
+  });
+});
