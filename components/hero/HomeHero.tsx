@@ -1,40 +1,50 @@
+'use client';
+
 import { FadeIn } from '@/components/motion/FadeIn';
-import { Reveal } from '@/components/motion/Reveal';
 import { Button } from '@/components/primitives/Button';
 import { Container } from '@/components/primitives/Container';
-import { PixelHero } from './PixelHero';
+import { BrainHero } from './BrainHero';
+import { SUPPORTING_CONTENT_STAGGER, SUPPORTING_CONTENT_START } from './timeline';
+import { useHeroPhase } from './useHeroPhase';
 
 export function HomeHero() {
+  const phase = useHeroPhase();
+
   return (
     <section
       id="hero"
       className="relative flex min-h-[calc(100dvh-56px)] items-center justify-center overflow-hidden"
       aria-label="Introduction"
+      data-brain-phase={phase}
     >
       <div className="absolute inset-0 bg-grid opacity-30" aria-hidden="true" />
 
       <Container className="relative z-10">
         <div className="flex flex-col items-center text-center">
-          <FadeIn>
-            <PixelHero className="mb-8 h-auto w-40 md:w-52" />
-          </FadeIn>
+          {/* Real h1 for SEO and screen readers — visually hidden */}
+          <h1 className="sr-only">Brian Cao</h1>
+
           <p className="mb-6 font-mono text-[11px] text-[var(--color-fg-subtle)] uppercase tracking-[0.18em]">
             Portfolio · 01
           </p>
-          <h1 className="font-serif text-[length:var(--text-display)] text-[var(--color-fg)] leading-[0.95] tracking-tight">
-            <Reveal>Brian </Reveal>
-            <Reveal delay={0.1}>
-              <em className="text-[var(--color-accent)] italic">Cao</em>
-            </Reveal>
-          </h1>
-          <FadeIn delay={0.3} className="mt-6 max-w-md">
+
+          <BrainHero phase={phase} className="h-auto w-60 md:w-[22rem]" />
+
+          <FadeIn
+            delay={phase === 'playing' ? SUPPORTING_CONTENT_START : 0}
+            className="mt-6 max-w-md"
+          >
             <p className="text-[var(--color-fg-muted)]">
               Full-stack engineer building systems at the edge of software and AI.
               <br />
               Stony Brook '27.
             </p>
           </FadeIn>
-          <FadeIn delay={0.5} className="mt-8 flex flex-wrap justify-center gap-3">
+
+          <FadeIn
+            delay={phase === 'playing' ? SUPPORTING_CONTENT_START + SUPPORTING_CONTENT_STAGGER : 0}
+            className="mt-8 flex flex-wrap justify-center gap-3"
+          >
             <Button href="/#work">View work</Button>
             <Button href="/#contact" variant="secondary">
               Get in touch
