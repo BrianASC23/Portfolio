@@ -2,6 +2,7 @@
 
 import { duration, ease, stagger } from '@/lib/motion';
 import { motion, useReducedMotion } from 'framer-motion';
+import { memo } from 'react';
 
 interface TextSplitProps {
   text: string;
@@ -10,7 +11,12 @@ interface TextSplitProps {
   by?: 'word' | 'char';
 }
 
-export function TextSplit({ text, className, delay = 0, by = 'word' }: TextSplitProps) {
+export const TextSplit = memo(function TextSplit({
+  text,
+  className,
+  delay = 0,
+  by = 'word',
+}: TextSplitProps) {
   const reduced = useReducedMotion();
 
   if (reduced) {
@@ -58,4 +64,4 @@ export function TextSplit({ text, className, delay = 0, by = 'word' }: TextSplit
       )}
     </motion.span>
   );
-}
+});

@@ -2,7 +2,7 @@
 
 import { duration, ease } from '@/lib/motion';
 import { motion, useReducedMotion } from 'framer-motion';
-import type { ReactNode } from 'react';
+import { type ReactNode, memo } from 'react';
 
 interface FadeInProps {
   children: ReactNode;
@@ -12,7 +12,13 @@ interface FadeInProps {
   as?: 'div' | 'span' | 'li' | 'section' | 'article';
 }
 
-export function FadeIn({ children, delay = 0, y = 16, className, as = 'div' }: FadeInProps) {
+export const FadeIn = memo(function FadeIn({
+  children,
+  delay = 0,
+  y = 16,
+  className,
+  as = 'div',
+}: FadeInProps) {
   const reduced = useReducedMotion();
   const MotionTag = motion[as];
 
@@ -32,4 +38,4 @@ export function FadeIn({ children, delay = 0, y = 16, className, as = 'div' }: F
       {children}
     </MotionTag>
   );
-}
+});

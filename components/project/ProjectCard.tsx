@@ -3,13 +3,14 @@ import { Pill } from '@/components/primitives/Pill';
 import type { Project } from '@/lib/schemas/project';
 import Image from 'next/image';
 import Link from 'next/link';
+import { memo } from 'react';
 
 interface ProjectCardProps {
   project: Project;
   index: number;
 }
 
-export function ProjectCard({ project, index }: ProjectCardProps) {
+export const ProjectCard = memo(function ProjectCard({ project, index }: ProjectCardProps) {
   return (
     <Link
       href={`/projects/${project.slug}`}
@@ -51,4 +52,4 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       </Tilt3D>
     </Link>
   );
-}
+});

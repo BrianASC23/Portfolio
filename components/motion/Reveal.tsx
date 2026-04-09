@@ -2,7 +2,7 @@
 
 import { duration, ease } from '@/lib/motion';
 import { motion, useReducedMotion } from 'framer-motion';
-import type { ReactNode } from 'react';
+import { type ReactNode, memo } from 'react';
 
 interface RevealProps {
   children: ReactNode;
@@ -13,7 +13,7 @@ interface RevealProps {
 /**
  * Vertical mask reveal — text slides up from behind a clipping mask.
  */
-export function Reveal({ children, delay = 0, className }: RevealProps) {
+export const Reveal = memo(function Reveal({ children, delay = 0, className }: RevealProps) {
   const reduced = useReducedMotion();
 
   if (reduced) {
@@ -33,4 +33,4 @@ export function Reveal({ children, delay = 0, className }: RevealProps) {
       </motion.span>
     </span>
   );
-}
+});

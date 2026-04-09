@@ -23,6 +23,6 @@ export const fontMono = localFont({
   src: '../public/fonts/JetBrainsMono-Variable.woff2',
   variable: '--font-mono',
   display: 'swap',
-  preload: false,
+  preload: true,
   fallback: ['ui-monospace', 'SFMono-Regular', 'monospace'],
 });

@@ -1,6 +1,7 @@
 import { FadeIn } from '@/components/motion/FadeIn';
 import { Button } from '@/components/primitives/Button';
 import { Section } from '@/components/primitives/Section';
+import { WritingEmptyState } from '@/components/writing/WritingEmptyState';
 import { formatDate } from '@/lib/utils/format';
 import { getMediumPosts } from '@/lib/writing/medium';
 import Image from 'next/image';
@@ -17,18 +18,7 @@ export async function WritingSection() {
       description="Long-form notes from Medium. Click through for the full post."
     >
       {posts.length === 0 ? (
-        <p className="text-[var(--color-fg-muted)]">
-          No posts yet — check back soon, or{' '}
-          <Link
-            href="https://medium.com/@brianc40722"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-[var(--color-accent)] hover:underline"
-          >
-            read on Medium
-          </Link>
-          .
-        </p>
+        <WritingEmptyState />
       ) : (
         <ul className="divide-y divide-[var(--color-border)]">
           {posts.map((post, i) => (
@@ -46,6 +36,7 @@ export async function WritingSection() {
                       alt=""
                       fill
                       sizes="192px"
+                      priority={i === 0}
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                     />
                   </div>

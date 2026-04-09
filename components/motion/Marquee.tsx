@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion } from 'framer-motion';
-import type { ReactNode } from 'react';
+import { type ReactNode, memo } from 'react';
 
 interface MarqueeProps {
   children: ReactNode;
@@ -10,7 +10,12 @@ interface MarqueeProps {
   className?: string;
 }
 
-export function Marquee({ children, speed = 40, reverse = false, className }: MarqueeProps) {
+export const Marquee = memo(function Marquee({
+  children,
+  speed = 40,
+  reverse = false,
+  className,
+}: MarqueeProps) {
   const reduced = useReducedMotion();
 
   if (reduced) {
@@ -31,4 +36,4 @@ export function Marquee({ children, speed = 40, reverse = false, className }: Ma
       </motion.div>
     </div>
   );
-}
+});

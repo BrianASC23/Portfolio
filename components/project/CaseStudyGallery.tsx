@@ -21,6 +21,7 @@ export function CaseStudyGallery({ gallery }: CaseStudyGalleryProps) {
                   alt={item.alt}
                   fill
                   sizes="(min-width: 768px) 50vw, 100vw"
+                  loading="lazy"
                   className="object-cover"
                 />
               </div>
