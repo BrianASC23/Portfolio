@@ -1,59 +1,188 @@
-import { FadeIn } from '@/components/motion/FadeIn';
-import { Pill } from '@/components/primitives/Pill';
-import { Section } from '@/components/primitives/Section';
-import { getAllExperiences } from '@/lib/content/experience';
-import { formatDate } from '@/lib/utils/format';
+'use client';
 
-function formatRange(start: string, end: string): string {
-  const startFormatted = formatDate(`${start}-01`);
-  const endFormatted = end === 'present' ? 'Present' : formatDate(`${end}-01`);
-  return `${startFormatted} — ${endFormatted}`;
+import { Container } from '@/components/primitives/Container';
+import { duration, ease, stagger } from '@/lib/motion';
+import type { Experience } from '@/lib/schemas/experience';
+import { motion, useReducedMotion } from 'framer-motion';
+import { Calendar } from 'lucide-react';
+
+/* ------------------------------------------------------------------ */
+/*  Date formatting (self-contained — no server import needed)         */
+/* ------------------------------------------------------------------ */
+
+function fmtDate(ym: string): string {
+  const d = new Date(`${ym}-01`);
+  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
 }
 
-export function ExperienceSection() {
-  const experiences = getAllExperiences();
+function formatRange(start: string, end: string): string {
+  return `${fmtDate(start)} — ${end === 'present' ? 'Present' : fmtDate(end)}`;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Company logo placeholder                                           */
+/* ------------------------------------------------------------------ */
+
+function LogoPlaceholder({ company }: { company: string }) {
+  const initials = company
+    .split(/[\s—-]+/)
+    .filter((w) => w.length > 0 && w[0] === w[0]!.toUpperCase())
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join('');
 
   return (
-    <Section id="experience" title="Experience" containerSize="narrow">
-      <ol className="relative space-y-10 border-[var(--color-border)] border-l pl-8">
-        {experiences.map((exp, i) => (
-          <FadeIn key={exp.slug} delay={i * 0.05} as="li" className="relative">
-            <span className="-left-[37px] absolute top-2 h-3 w-3 rounded-full border border-[var(--color-accent)] bg-[var(--color-bg)]" />
-            <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:justify-between">
-              <div>
-                <h3 className="font-serif text-[var(--color-fg)] text-xl">{exp.role}</h3>
-                <p className="text-[var(--color-fg-muted)] text-sm">
-                  {exp.company}
-                  {exp.location && (
-                    <span className="text-[var(--color-fg-subtle)]"> · {exp.location}</span>
-                  )}
-                </p>
-              </div>
-              <p className="shrink-0 font-mono text-[10px] text-[var(--color-fg-subtle)] uppercase tracking-[0.14em]">
-                {formatRange(exp.start, exp.end)}
-              </p>
-            </div>
-            <ul className="mt-4 space-y-1.5 text-[var(--color-fg-muted)] text-sm">
-              {exp.bullets.map((bullet) => (
-                <li key={bullet} className="flex gap-3">
-                  <span
-                    className="mt-2 h-px w-3 shrink-0 bg-[var(--color-accent)]"
-                    aria-hidden="true"
-                  />
-                  <span>{bullet}</span>
-                </li>
-              ))}
-            </ul>
-            {exp.stack.length > 0 && (
-              <div className="mt-4 flex flex-wrap gap-2">
-                {exp.stack.map((tech) => (
-                  <Pill key={tech}>{tech}</Pill>
-                ))}
-              </div>
-            )}
-          </FadeIn>
-        ))}
-      </ol>
-    </Section>
+    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-inset)] font-semibold text-sm text-[var(--color-accent)]">
+      {initials || company[0]}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Single experience card                                             */
+/* ------------------------------------------------------------------ */
+
+function ExperienceCard({ exp }: { exp: Experience }) {
+  return (
+    <motion.article
+      className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-md md:p-8"
+      whileHover={{ y: -2 }}
+      transition={{ duration: duration.fast, ease: ease.out }}
+    >
+      {/* ---- Header ---- */}
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start gap-4">
+          {exp.logo ? (
+            <img
+              src={exp.logo}
+              alt={`${exp.company} logo`}
+              className="h-12 w-12 shrink-0 rounded-lg border border-[var(--color-border)] object-contain"
+            />
+          ) : (
+            <LogoPlaceholder company={exp.company} />
+          )}
+          <div className="min-w-0">
+            <h3 className="font-bold text-lg text-[var(--color-fg)]">{exp.role}</h3>
+            <p className="text-sm text-[var(--color-fg-muted)]">
+              {exp.company}
+              {exp.location && (
+                <span className="text-[var(--color-fg-subtle)]"> · {exp.location}</span>
+              )}
+            </p>
+          </div>
+        </div>
+
+        <span className="flex shrink-0 items-center gap-1.5 pt-1 font-mono text-xs text-[var(--color-fg-subtle)]">
+          <Calendar size={14} className="text-[var(--color-fg-subtle)]" aria-hidden="true" />
+          {formatRange(exp.start, exp.end)}
+        </span>
+      </div>
+
+      {/* ---- Description ---- */}
+      {exp.description && (
+        <p className="mt-5 leading-relaxed text-[var(--color-fg-muted)]">{exp.description}</p>
+      )}
+
+      {/* ---- Core Impact ---- */}
+      {exp.bullets.length > 0 && (
+        <div className="mt-6">
+          <h4 className="mb-3 text-xs font-bold uppercase tracking-wider text-[var(--color-fg)]">
+            Core Impact
+          </h4>
+          <ul className="grid grid-cols-1 gap-x-8 gap-y-2.5 md:grid-cols-2">
+            {exp.bullets.map((bullet) => (
+              <li
+                key={bullet}
+                className="flex items-start gap-2.5 text-sm text-[var(--color-fg-muted)]"
+              >
+                <span
+                  className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]"
+                  aria-hidden="true"
+                />
+                <span>{bullet}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {/* ---- Skills ---- */}
+      {exp.stack.length > 0 && (
+        <div className="mt-6 flex flex-wrap gap-2">
+          {exp.stack.map((tech) => (
+            <span
+              key={tech}
+              className="rounded-full bg-slate-50 px-3 py-1 font-mono text-[11px] text-[var(--color-fg-muted)]"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      )}
+    </motion.article>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Section (client component — receives data as prop)                 */
+/* ------------------------------------------------------------------ */
+
+export function ExperienceSection({ experiences }: { experiences: Experience[] }) {
+  const reduced = useReducedMotion();
+
+  return (
+    <section
+      id="experience"
+      aria-label="Professional experience"
+      className="relative py-24 md:py-32"
+    >
+      <Container size="default">
+        {/* ---- Section heading ---- */}
+        <header className="mb-12 md:mb-16">
+          <h2 className="relative inline-block font-serif text-[length:var(--text-h2)] font-light leading-[1.05] tracking-[-0.02em] text-[var(--color-fg)]">
+            Professional Experience
+            <span className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full bg-[var(--color-accent)]" />
+          </h2>
+        </header>
+
+        {/* ---- Card list ---- */}
+        {reduced ? (
+          <div className="space-y-6">
+            {experiences.map((exp) => (
+              <ExperienceCard key={exp.slug} exp={exp} />
+            ))}
+          </div>
+        ) : (
+          <motion.div
+            className="space-y-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-10% 0px' }}
+            variants={{
+              hidden: {},
+              visible: {
+                transition: { staggerChildren: stagger.loose, delayChildren: 0 },
+              },
+            }}
+          >
+            {experiences.map((exp) => (
+              <motion.div
+                key={exp.slug}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: duration.base, ease: ease.out },
+                  },
+                }}
+              >
+                <ExperienceCard exp={exp} />
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </Container>
+    </section>
   );
 }
