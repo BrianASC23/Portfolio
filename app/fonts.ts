@@ -18,11 +18,3 @@ export const fontSans = localFont({
   preload: true,
   fallback: ['ui-sans-serif', 'system-ui', 'sans-serif'],
 });
-
-export const fontMono = localFont({
-  src: '../public/fonts/JetBrainsMono-Variable.woff2',
-  variable: '--font-mono',
-  display: 'swap',
-  preload: true,
-  fallback: ['ui-monospace', 'SFMono-Regular', 'monospace'],
-});

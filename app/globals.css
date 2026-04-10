@@ -27,7 +27,7 @@
   /* Typography families (wired from next/font variables) */
   --font-family-serif: var(--font-serif), Georgia, ui-serif, serif;
   --font-family-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-family-mono: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-family-mono: ui-monospace, SFMono-Regular, "Cascadia Code", "Fira Code", monospace;
 
   /* Fluid type scale — oversized display for editorial serif headings */
   --text-display: clamp(3.5rem, 2.5rem + 6vw, 8rem);
