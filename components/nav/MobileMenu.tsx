@@ -1,17 +1,10 @@
 'use client';
 
+import { NAV_LINKS } from '@/lib/nav';
 import { cn } from '@/lib/utils/cn';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useState } from 'react';
-
-const LINKS = [
-  { href: '/#work', label: 'Work' },
-  { href: '/#about', label: 'About' },
-  { href: '/writing', label: 'Writing' },
-  { href: '/resume', label: 'Resume' },
-  { href: '/#contact', label: 'Contact' },
-];
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
@@ -48,7 +41,7 @@ export function MobileMenu() {
             className="fixed inset-x-0 top-[56px] z-40 mx-4 rounded-2xl border border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] p-4 md:hidden"
           >
             <ul className="flex flex-col gap-1">
-              {LINKS.map((link) => (
+              {NAV_LINKS.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}

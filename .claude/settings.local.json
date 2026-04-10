@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash:*)",
+      "Bash(which pandoc:*)",
+      "Bash(python:*)",
+      "Bash(cd:*)",
+      "Bash(cd C:\\\\Users\\\\bcfra\\\\Projects\\\\Portfolio\\\\Portfolio:*)",
+      "Bash(ls:*)",
+      "Bash(git add:*)",
+      "Bash(git check-ignore:*)",
+      "Bash(mkdir:*)",
+      "Bash(git worktree:*)",
+      "Bash(pnpm:*)",
+      "Bash(netstat -ano 2>/dev/null | grep \":3000\" | head -5 || echo \"port 3000 check done\")",
+      "Bash(npm install:*)",
+      "Bash(git:*)",
+      "Bash(npm show:*)",
+      "Bash(cd /c/Users/bcfra/Projects/Portfolio/Portfolio/.worktrees/portfolio-impl && npm show next-mdx-remote versions --json 2>&1 | python3 -c \"import json,sys; versions=json.load\\(sys.stdin\\); print\\([v for v in versions if v.startswith\\('6'\\) or v.startswith\\('5'\\)][-5:]\\)\" 2>&1)",
+      "Bash(cd /c/Users/bcfra/Projects/Portfolio/Portfolio/.worktrees/portfolio-impl && npm show vite@latest version 2>&1; npm show vite versions --json 2>&1 | python3 -c \"import json,sys; v=json.load\\(sys.stdin\\); print\\([x for x in v if x.startswith\\('5'\\)][-5:]\\)\" 2>&1)",
+      "Bash(node:*)",
+      "Bash(echo EXIT_CODE: $?:*)",
+      "Bash(echo EXIT:$?:*)",
+      "Bash(curl:*)",
+      "Bash(head:*)",
+      "Bash(cd \"C:/Users/bcfra/Projects/Portfolio/Portfolio/public/resume\" && mv \"Brian Cao 0406 Resume .pdf\" \"BrianCao-Resume.pdf\" && ls -la 2>&1)",
+      "Bash(cd \"C:/Users/bcfra/Projects/Portfolio/Portfolio\" && rm -f components/hero/Hero3DCanvas.tsx components/hero/HeroBlob.tsx components/hero/HeroStaticFallback.tsx && rm -rf components/hero/shaders && ls components/hero/ 2>&1)",
+      "Bash(tail:*)",
+      "Bash(find:*)",
+      "WebFetch(domain:ashimrudrapaul.com)",
+      "Bash(cd /c/Users/bcfra/Projects/Portfolio/Portfolio && npx tsc --noEmit 2>&1)"
+    ]
+  }
+}

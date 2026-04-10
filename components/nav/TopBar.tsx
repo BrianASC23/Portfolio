@@ -1,13 +1,7 @@
+import { NAV_LINKS } from '@/lib/nav';
 import Link from 'next/link';
 import { CommandTrigger } from './CommandTrigger';
 import { MobileMenu } from './MobileMenu';
-
-const LINKS = [
-  { href: '/#work', label: 'Work' },
-  { href: '/#about', label: 'About' },
-  { href: '/writing', label: 'Writing' },
-  { href: '/resume', label: 'Resume' },
-];
 
 export function TopBar() {
   return (
@@ -20,7 +14,7 @@ export function TopBar() {
           BC · <span className="text-[var(--color-fg-subtle)]">Portfolio</span>
         </Link>
         <nav className="hidden gap-8 md:flex">
-          {LINKS.map((link) => (
+          {NAV_LINKS.filter((l) => !l.mobileOnly).map((link) => (
             <Link
               key={link.href}
               href={link.href}

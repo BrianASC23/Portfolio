@@ -1,9 +1,15 @@
-import { formatDate, truncate } from '@/lib/utils/format';
+import { formatDate, formatDateFull, truncate } from '@/lib/utils/format';
 import { describe, expect, it } from 'vitest';
 
 describe('formatDate', () => {
   it('formats ISO dates as "Mon YYYY"', () => {
     expect(formatDate('2026-04-06')).toBe('Apr 2026');
+  });
+});
+
+describe('formatDateFull', () => {
+  it('formats ISO dates as "Mon D, YYYY"', () => {
+    expect(formatDateFull('2026-04-06')).toBe('Apr 6, 2026');
   });
 });
 
