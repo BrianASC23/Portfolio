@@ -8,7 +8,7 @@ export function SelectedWorkSection() {
   const projects = getFeaturedProjects();
 
   return (
-    <Section id="work" title="Selected Work">
+    <Section id="work" title="Projects">
       <div className="grid gap-8 md:grid-cols-2">
         {projects.map((project, i) => (
           <FadeIn key={project.slug} delay={i * 0.05}>
