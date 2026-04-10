@@ -1,6 +1,6 @@
 'use client';
 
-import { NAV_LINKS } from '@/lib/nav';
+import { CONTACT_EMAIL, NAV_LINKS } from '@/lib/nav';
 import { cn } from '@/lib/utils/cn';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
@@ -27,7 +27,7 @@ export function MobileMenu() {
         <span
           className={cn(
             'absolute block h-px w-4 bg-current transition',
-            open && '-rotate-45 -translate-y-[3px]',
+            open && '-translate-y-[3px] -rotate-45',
           )}
         />
       </button>
@@ -46,12 +46,21 @@ export function MobileMenu() {
                   <Link
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="block rounded-lg px-4 py-3 font-mono text-[var(--color-fg)] text-sm uppercase tracking-[0.12em] hover:bg-[var(--color-bg-inset)] hover:text-[var(--color-accent)]"
+                    className="block rounded-lg px-4 py-3 text-sm text-[var(--color-fg)] hover:bg-[var(--color-bg-inset)] hover:text-[var(--color-accent)]"
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
+              <li>
+                <a
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  onClick={() => setOpen(false)}
+                  className="block rounded-lg px-4 py-3 text-sm font-medium text-[var(--color-accent)]"
+                >
+                  Contact →
+                </a>
+              </li>
             </ul>
           </motion.div>
         )}

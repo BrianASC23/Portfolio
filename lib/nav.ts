@@ -6,9 +6,10 @@ export interface NavLink {
 }
 
 export const NAV_LINKS: NavLink[] = [
-  { href: '/#work', label: 'Work' },
-  { href: '/#about', label: 'About' },
+  { href: '/', label: 'Home' },
+  { href: '/projects', label: 'Projects' },
   { href: '/writing', label: 'Writing' },
   { href: '/resume', label: 'Resume' },
-  { href: '/#contact', label: 'Contact', mobileOnly: true },
 ];
+
+export const CONTACT_EMAIL = 'brianc40722@gmail.com';
