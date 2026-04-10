@@ -1,10 +1,76 @@
-import { Marquee } from '@/components/motion/Marquee';
+'use client';
+
 import { Section } from '@/components/primitives/Section';
-import { getToolbelt } from '@/lib/content/site';
+import { duration, ease, stagger } from '@/lib/motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import type { IconType } from 'react-icons';
+import { FaAws } from 'react-icons/fa6';
+import {
+  SiAngular,
+  SiDocker,
+  SiExpress,
+  SiFastapi,
+  SiGraphql,
+  SiNestjs,
+  SiNextdotjs,
+  SiPostgresql,
+  SiReact,
+} from 'react-icons/si';
+
+interface Tool {
+  name: string;
+  icon: IconType;
+  brandColor: string;
+}
+
+const tools: Tool[] = [
+  { name: 'FastAPI', icon: SiFastapi, brandColor: '#009688' },
+  { name: 'Express', icon: SiExpress, brandColor: '#000000' },
+  { name: 'NestJS', icon: SiNestjs, brandColor: '#E0234E' },
+  { name: 'PostgreSQL', icon: SiPostgresql, brandColor: '#4169E1' },
+  { name: 'GraphQL', icon: SiGraphql, brandColor: '#E10098' },
+  { name: 'Angular', icon: SiAngular, brandColor: '#DD0031' },
+  { name: 'Next.js', icon: SiNextdotjs, brandColor: '#000000' },
+  { name: 'React Native', icon: SiReact, brandColor: '#61DAFB' },
+  { name: 'Docker', icon: SiDocker, brandColor: '#2496ED' },
+  { name: 'AWS', icon: FaAws, brandColor: '#FF9900' },
+];
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: stagger.base },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: duration.base, ease: ease.out },
+  },
+};
 
 export function ToolbeltSection() {
-  const tb = getToolbelt();
-  const all = [...tb.languages, ...tb.frontend, ...tb.backend, ...tb.aiml, ...tb.tools];
+  const reduced = useReducedMotion();
+
+  if (reduced) {
+    return (
+      <Section
+        id="toolbelt"
+        title="Toolbelt"
+        description="The short list of things I've used in production or research."
+        containerSize="wide"
+      >
+        <div className="grid grid-cols-2 gap-x-4 gap-y-5 md:grid-cols-3 lg:grid-cols-5">
+          {tools.map((tool) => (
+            <ToolPill key={tool.name} tool={tool} />
+          ))}
+        </div>
+      </Section>
+    );
+  }
 
   return (
     <Section
@@ -13,23 +79,39 @@ export function ToolbeltSection() {
       description="The short list of things I've used in production or research."
       containerSize="wide"
     >
-      <Marquee speed={60} className="py-4">
-        {all.map((tool) => (
-          <span
-            key={tool}
-            className="font-serif text-4xl text-[var(--color-fg-subtle)] transition-colors hover:text-[var(--color-accent)] md:text-5xl"
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-10% 0px' }}
+        variants={containerVariants}
+        className="grid grid-cols-2 gap-x-4 gap-y-5 md:grid-cols-3 lg:grid-cols-5"
+      >
+        {tools.map((tool) => (
+          <motion.div
+            key={tool.name}
+            variants={itemVariants}
+            whileHover={{
+              scale: 1.03,
+              y: -2,
+              boxShadow: '0 0 20px rgba(37, 99, 235, 0.1)',
+              transition: { duration: duration.fast, ease: ease.out },
+            }}
+            className="flex cursor-default items-center gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-inset)] px-6 py-4 shadow-sm"
           >
-            {tool}
-          </span>
+            <tool.icon className="size-5 shrink-0" style={{ color: tool.brandColor }} />
+            <span className="text-sm font-medium text-[var(--color-fg)]">{tool.name}</span>
+          </motion.div>
         ))}
-      </Marquee>
-      <Marquee speed={80} reverse className="py-4 opacity-60">
-        {all.map((tool) => (
-          <span key={`${tool}-2`} className="font-mono text-[var(--color-fg-subtle)] text-xl">
-            · {tool}
-          </span>
-        ))}
-      </Marquee>
+      </motion.div>
     </Section>
+  );
+}
+
+function ToolPill({ tool }: { tool: Tool }) {
+  return (
+    <div className="flex items-center gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-inset)] px-6 py-4 shadow-sm">
+      <tool.icon className="size-5 shrink-0" style={{ color: tool.brandColor }} />
+      <span className="text-sm font-medium text-[var(--color-fg)]">{tool.name}</span>
+    </div>
   );
 }
