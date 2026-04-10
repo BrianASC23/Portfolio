@@ -2,7 +2,6 @@
 
 import { Button } from '@/components/primitives/Button';
 import { Container } from '@/components/primitives/Container';
-import { getFeaturedProjects } from '@/lib/content/projects';
 import { CONTACT_EMAIL } from '@/lib/nav';
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { useRef } from 'react';
@@ -14,7 +13,17 @@ const GLASS =
 
 const STACK_PILLS = ['React', 'Python', 'TypeScript', 'PyTorch', 'Next.js'];
 
-export function BentoHero() {
+interface FeaturedProject {
+  title: string;
+  tagline: string;
+  tech: string[];
+}
+
+interface BentoHeroProps {
+  featuredProject?: FeaturedProject;
+}
+
+export function BentoHero({ featuredProject }: BentoHeroProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
 
@@ -37,20 +46,11 @@ export function BentoHero() {
   // Specular highlight moves at 2x scroll speed
   const highlightX = useTransform(scrollYProgress, [0, 0.5], ['120%', '-20%']);
 
-  // Get the first featured project
-  let featuredTitle = 'Advising Bot';
-  let featuredTagline = 'AI-powered academic advisor';
-  let featuredTech: string[] = ['RAG', 'Next.js'];
-  try {
-    const projects = getFeaturedProjects();
-    if (projects.length > 0) {
-      featuredTitle = projects[0]!.title;
-      featuredTagline = projects[0]!.tagline;
-      featuredTech = projects[0]!.stack.slice(0, 2);
-    }
-  } catch {
-    // Fallback to defaults in tests / SSR where content may not load
-  }
+  const featured = featuredProject ?? {
+    title: 'Advising Bot',
+    tagline: 'AI-powered academic advisor',
+    tech: ['RAG', 'Next.js'],
+  };
 
   const isReduced = !!reduced;
 
@@ -131,10 +131,10 @@ export function BentoHero() {
               <p className="mb-2 text-[11px] uppercase tracking-[0.1em] text-[var(--color-fg-subtle)]">
                 Featured Project
               </p>
-              <h3 className="text-[17px] font-semibold text-[var(--color-fg)]">{featuredTitle}</h3>
-              <p className="mt-1 text-xs text-[var(--color-fg-muted)]">{featuredTagline}</p>
+              <h3 className="text-[17px] font-semibold text-[var(--color-fg)]">{featured.title}</h3>
+              <p className="mt-1 text-xs text-[var(--color-fg-muted)]">{featured.tagline}</p>
               <div className="mt-3 flex gap-1.5">
-                {featuredTech.map((t) => (
+                {featured.tech.map((t) => (
                   <span
                     key={t}
                     className="rounded-full border border-[var(--color-border)] px-2.5 py-0.5 text-[11px] text-[var(--color-fg-muted)]"
