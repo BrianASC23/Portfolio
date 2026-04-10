@@ -1,6 +1,5 @@
 'use client';
 
-import { Section } from '@/components/primitives/Section';
 import { duration, ease, stagger } from '@/lib/motion';
 import { motion, useReducedMotion } from 'framer-motion';
 import type { IconType } from 'react-icons';
@@ -52,58 +51,46 @@ const itemVariants = {
   },
 };
 
-export function ToolbeltSection() {
+export function ToolbeltGrid({ className }: { className?: string }) {
   const reduced = useReducedMotion();
 
   if (reduced) {
     return (
-      <Section
-        id="toolbelt"
-        title="Toolbelt"
-        description="The short list of things I've used in production or research."
-        containerSize="wide"
+      <div
+        className={`grid grid-cols-2 gap-x-4 gap-y-5 md:grid-cols-3 lg:grid-cols-5 ${className ?? ''}`}
       >
-        <div className="grid grid-cols-2 gap-x-4 gap-y-5 md:grid-cols-3 lg:grid-cols-5">
-          {tools.map((tool) => (
-            <ToolPill key={tool.name} tool={tool} />
-          ))}
-        </div>
-      </Section>
+        {tools.map((tool) => (
+          <ToolPill key={tool.name} tool={tool} />
+        ))}
+      </div>
     );
   }
 
   return (
-    <Section
-      id="toolbelt"
-      title="Toolbelt"
-      description="The short list of things I've used in production or research."
-      containerSize="wide"
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-10% 0px' }}
+      variants={containerVariants}
+      className={`grid grid-cols-2 gap-x-4 gap-y-5 md:grid-cols-3 lg:grid-cols-5 ${className ?? ''}`}
     >
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: '-10% 0px' }}
-        variants={containerVariants}
-        className="grid grid-cols-2 gap-x-4 gap-y-5 md:grid-cols-3 lg:grid-cols-5"
-      >
-        {tools.map((tool) => (
-          <motion.div
-            key={tool.name}
-            variants={itemVariants}
-            whileHover={{
-              scale: 1.03,
-              y: -2,
-              boxShadow: '0 0 20px rgba(37, 99, 235, 0.1)',
-              transition: { duration: duration.fast, ease: ease.out },
-            }}
-            className="flex cursor-default items-center gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-inset)] px-6 py-4 shadow-sm"
-          >
-            <tool.icon className="size-5 shrink-0" style={{ color: tool.brandColor }} />
-            <span className="text-sm font-medium text-[var(--color-fg)]">{tool.name}</span>
-          </motion.div>
-        ))}
-      </motion.div>
-    </Section>
+      {tools.map((tool) => (
+        <motion.div
+          key={tool.name}
+          variants={itemVariants}
+          whileHover={{
+            scale: 1.03,
+            y: -2,
+            boxShadow: '0 0 20px rgba(37, 99, 235, 0.1)',
+            transition: { duration: duration.fast, ease: ease.out },
+          }}
+          className="flex cursor-default items-center gap-3 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-inset)] px-6 py-4 shadow-sm"
+        >
+          <tool.icon className="size-5 shrink-0" style={{ color: tool.brandColor }} />
+          <span className="text-sm font-medium text-[var(--color-fg)]">{tool.name}</span>
+        </motion.div>
+      ))}
+    </motion.div>
   );
 }
 

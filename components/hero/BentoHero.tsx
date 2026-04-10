@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/primitives/Button';
 import { Container } from '@/components/primitives/Container';
+import { ToolbeltGrid } from '@/components/sections/ToolbeltSection';
 import { CONTACT_EMAIL } from '@/lib/nav';
 import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { useRef } from 'react';
@@ -88,7 +89,7 @@ export function BentoHero({ featuredProject }: BentoHeroProps) {
                     transformPerspective: 1200,
                   }
             }
-            className="relative mx-auto grid max-w-[580px] grid-cols-[1.4fr_1fr] grid-rows-[auto_auto] gap-3"
+            className="relative mx-auto grid max-w-[960px] grid-cols-[1.4fr_1fr] grid-rows-[auto_auto] gap-3"
           >
             {/* Specular highlight overlay */}
             {!isReduced && (
@@ -162,6 +163,8 @@ export function BentoHero({ featuredProject }: BentoHeroProps) {
               </div>
             </div>
           </motion.div>
+
+          <ToolbeltGrid className="mx-auto mt-6 max-w-[960px]" />
         </Container>
       </div>
     </div>
