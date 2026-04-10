@@ -1,6 +1,5 @@
 import { HomeHero } from '@/components/hero/HomeHero';
 import { AboutSection } from '@/components/sections/AboutSection';
-import { ContactSection } from '@/components/sections/ContactSection';
 import { ExperienceSection } from '@/components/sections/ExperienceSection';
 import { SelectedWorkSection } from '@/components/sections/SelectedWorkSection';
 import { ToolbeltSection } from '@/components/sections/ToolbeltSection';
@@ -13,11 +12,10 @@ export default function HomePage() {
     <>
       <HomeHero />
       <AboutSection />
+      <ToolbeltSection />
       <SelectedWorkSection />
       <ExperienceSection />
-      <ToolbeltSection />
       <WritingSection />
-      <ContactSection />
     </>
   );
 }
