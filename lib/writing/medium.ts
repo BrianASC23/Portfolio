@@ -2,14 +2,26 @@ import { publicEnv } from '@/lib/env';
 import { type WritingPost, writingPostSchema } from '@/lib/schemas/writing';
 import { XMLParser } from 'fast-xml-parser';
 
+interface CdataValue {
+  __cdata: string;
+}
+
 interface RawItem {
-  title: string;
+  title: string | CdataValue;
   link: string;
   guid: string | { '#text': string };
   pubDate: string;
-  'content:encoded'?: string;
-  description?: string;
-  category?: string | string[];
+  'content:encoded'?: string | CdataValue;
+  description?: string | CdataValue;
+  category?: (string | CdataValue) | (string | CdataValue)[];
+}
+
+/** Unwrap `{ __cdata: "..." }` objects produced by fast-xml-parser. */
+function unwrapCdata(val: unknown): string {
+  if (typeof val === 'string') return val;
+  if (val && typeof val === 'object' && '__cdata' in val)
+    return String((val as CdataValue).__cdata);
+  return '';
 }
 
 function toExcerpt(html: string, max = 220): string {
@@ -45,23 +57,18 @@ export function parseMediumFeed(xml: string): WritingPost[] {
   const items: RawItem[] = parsed?.rss?.channel?.item ?? [];
 
   return items.map((item) => {
-    const contentRaw =
-      // biome-ignore lint/suspicious/noExplicitAny: parser variants
-      (item['content:encoded'] as any)?.__cdata ??
-      item['content:encoded'] ??
-      item.description ??
-      '';
-    const html = typeof contentRaw === 'string' ? contentRaw : '';
-    const categories = Array.isArray(item.category)
+    const html = unwrapCdata(item['content:encoded']) || unwrapCdata(item.description);
+    const rawCategories = Array.isArray(item.category)
       ? item.category
       : item.category
         ? [item.category]
         : [];
+    const categories = rawCategories.map(unwrapCdata).filter(Boolean);
     const guid = typeof item.guid === 'string' ? item.guid : (item.guid?.['#text'] ?? item.link);
 
     return writingPostSchema.parse({
       id: guid,
-      title: item.title,
+      title: unwrapCdata(item.title),
       link: item.link,
       publishedAt: new Date(item.pubDate).toISOString(),
       excerpt: toExcerpt(html),
