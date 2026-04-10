@@ -11,15 +11,26 @@ export function TopBar() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {NAV_LINKS.map((link) =>
+            link.download ? (
+              <a
+                key={link.href}
+                href={link.href}
+                download
+                className="text-sm text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm text-[var(--color-fg-muted)] transition-colors hover:text-[var(--color-fg)]"
+              >
+                {link.label}
+              </Link>
+            ),
+          )}
           <a
             href={`mailto:${CONTACT_EMAIL}`}
             className="rounded-full bg-[var(--color-accent)] px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-[var(--color-accent-hi)]"

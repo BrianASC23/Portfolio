@@ -43,13 +43,24 @@ export function MobileMenu() {
             <ul className="flex flex-col gap-1">
               {NAV_LINKS.map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="block rounded-lg px-4 py-3 text-sm text-[var(--color-fg)] hover:bg-[var(--color-bg-inset)] hover:text-[var(--color-accent)]"
-                  >
-                    {link.label}
-                  </Link>
+                  {link.download ? (
+                    <a
+                      href={link.href}
+                      download
+                      onClick={() => setOpen(false)}
+                      className="block rounded-lg px-4 py-3 text-sm text-[var(--color-fg)] hover:bg-[var(--color-bg-inset)] hover:text-[var(--color-accent)]"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      onClick={() => setOpen(false)}
+                      className="block rounded-lg px-4 py-3 text-sm text-[var(--color-fg)] hover:bg-[var(--color-bg-inset)] hover:text-[var(--color-accent)]"
+                    >
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
               <li>
