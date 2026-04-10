@@ -8,18 +8,7 @@ export function AboutSection() {
   const bio = getBio();
 
   return (
-    <Section
-      id="about"
-      eyebrow="02 · About"
-      title={
-        <>
-          Builder first.
-          <br />
-          <em className="text-[var(--color-accent)] italic">Thoughtful</em> second.
-        </>
-      }
-      containerSize="narrow"
-    >
+    <Section id="about" title="About" containerSize="narrow">
       <div className="grid gap-10 md:grid-cols-[1fr_240px]">
         <div>
           <FadeIn>
@@ -34,7 +23,7 @@ export function AboutSection() {
           </FadeIn>
           <FadeIn
             delay={0.2}
-            className="mt-8 flex flex-wrap gap-x-8 gap-y-2 font-mono text-[11px] text-[var(--color-fg-subtle)] uppercase tracking-[0.14em]"
+            className="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-sm text-[var(--color-fg-subtle)]"
           >
             <span>{bio.frontmatter.role}</span>
             {bio.frontmatter.school && <span>{bio.frontmatter.school}</span>}

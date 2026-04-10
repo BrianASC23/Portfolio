@@ -32,13 +32,9 @@ export function Section({
       <Container size={containerSize}>
         {(eyebrow || title || description) && (
           <header className="mb-12 md:mb-16">
-            {eyebrow && (
-              <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--color-fg-subtle)]">
-                {eyebrow}
-              </p>
-            )}
+            {eyebrow && <p className="text-sm text-[var(--color-fg-subtle)]">{eyebrow}</p>}
             {title && (
-              <h2 className="mt-3 font-serif text-[length:var(--text-h2)] leading-[1.05] tracking-tight text-[var(--color-fg)]">
+              <h2 className="mt-3 font-serif text-[length:var(--text-h2)] font-light leading-[1.05] tracking-[-0.02em] text-[var(--color-fg)]">
                 {title}
               </h2>
             )}

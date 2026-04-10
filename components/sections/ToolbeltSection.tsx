@@ -9,8 +9,7 @@ export function ToolbeltSection() {
   return (
     <Section
       id="toolbelt"
-      eyebrow="05 · Toolbelt"
-      title="Tools I reach for"
+      title="Toolbelt"
       description="The short list of things I've used in production or research."
       containerSize="wide"
     >

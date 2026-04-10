@@ -14,12 +14,7 @@ export function ExperienceSection() {
   const experiences = getAllExperiences();
 
   return (
-    <Section
-      id="experience"
-      eyebrow="04 · Experience"
-      title="Where I've been"
-      containerSize="narrow"
-    >
+    <Section id="experience" title="Experience" containerSize="narrow">
       <ol className="relative space-y-10 border-[var(--color-border)] border-l pl-8">
         {experiences.map((exp, i) => (
           <FadeIn key={exp.slug} delay={i * 0.05} as="li" className="relative">

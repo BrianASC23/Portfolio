@@ -11,8 +11,7 @@ export async function WritingSection() {
   return (
     <Section
       id="writing"
-      eyebrow="06 · Writing"
-      title="Recent notes"
+      title="Recent Writing"
       description="Long-form notes from Medium. Click through for the full post."
     >
       {posts.length === 0 ? (
