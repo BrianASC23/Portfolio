@@ -17,7 +17,7 @@ export function WritingCard({ post, priority = false }: WritingCardProps) {
       className="group block focus-visible:outline-none"
       aria-label={post.title}
     >
-      <article className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] transition-all duration-300 group-hover:border-[var(--color-accent)] group-hover:shadow-[var(--shadow-card)]">
+      <article className="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-elevated)] transition-all duration-300 group-hover:border-[var(--color-accent)] group-hover:shadow-[var(--shadow-glow-card)]">
         <div className="relative aspect-[16/10] overflow-hidden bg-[var(--color-bg-inset)]">
           {post.thumbnail ? (
             <Image
