@@ -22,8 +22,8 @@ export async function GET(request: Request) {
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: '80px 72px',
-        background: 'radial-gradient(ellipse at 70% 40%, #f59e0b33 0%, transparent 55%), #0b0a08',
-        color: '#f4f1ea',
+        background: 'radial-gradient(ellipse at 70% 40%, #2563eb22 0%, transparent 55%), #ffffff',
+        color: '#111111',
         fontFamily: 'sans-serif',
       }}
     >
@@ -34,7 +34,7 @@ export async function GET(request: Request) {
           fontSize: 16,
           letterSpacing: '0.18em',
           textTransform: 'uppercase',
-          color: '#8a8578',
+          color: '#999999',
         }}
       >
         <span>{eyebrow}</span>
@@ -46,13 +46,13 @@ export async function GET(request: Request) {
             fontSize: 88,
             fontFamily: 'serif',
             lineHeight: 0.98,
-            color: '#f4f1ea',
+            color: '#111111',
             margin: 0,
           }}
         >
           {title}
         </h1>
-        <p style={{ fontSize: 28, color: '#a7a198', marginTop: 24, maxWidth: 820 }}>{subtitle}</p>
+        <p style={{ fontSize: 28, color: '#666666', marginTop: 24, maxWidth: 820 }}>{subtitle}</p>
       </div>
       <div
         style={{
@@ -61,7 +61,7 @@ export async function GET(request: Request) {
           fontSize: 16,
           letterSpacing: '0.18em',
           textTransform: 'uppercase',
-          color: '#8a8578',
+          color: '#999999',
         }}
       >
         <span style={{ display: 'flex', alignItems: 'center' }}>
@@ -69,7 +69,7 @@ export async function GET(request: Request) {
             style={{
               width: 10,
               height: 10,
-              background: '#fbbf24',
+              background: '#2563eb',
               borderRadius: 999,
               marginRight: 12,
             }}
