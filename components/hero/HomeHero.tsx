@@ -1,4 +1,5 @@
 import { getFeaturedProjects } from '@/lib/content/projects';
+import { getBio } from '@/lib/content/site';
 import { BentoHero } from './BentoHero';
 
 export function HomeHero() {
@@ -8,9 +9,11 @@ export function HomeHero() {
     ? { title: featured.title, tagline: featured.tagline, tech: featured.stack.slice(0, 2) }
     : undefined;
 
+  const bio = getBio();
+
   return (
     <section id="hero" aria-label="Introduction">
-      <BentoHero featuredProject={featuredProject} />
+      <BentoHero featuredProject={featuredProject} bio={bio} />
     </section>
   );
 }

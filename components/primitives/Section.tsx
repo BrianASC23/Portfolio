@@ -7,6 +7,7 @@ interface SectionProps {
   eyebrow?: string;
   title?: ReactNode;
   description?: ReactNode;
+  descriptionClassName?: string;
   children: ReactNode;
   className?: string;
   containerSize?: 'narrow' | 'default' | 'wide' | 'bleed';
@@ -18,6 +19,7 @@ export function Section({
   eyebrow,
   title,
   description,
+  descriptionClassName,
   children,
   className,
   containerSize = 'default',
@@ -36,11 +38,18 @@ export function Section({
             {title && (
               <h2 className="relative mt-3 inline-block font-serif text-[length:var(--text-h2)] font-light leading-[1.05] tracking-[-0.02em] text-[var(--color-fg)]">
                 {title}
-                <span className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full bg-[var(--color-accent)]" />
+                <span
+                  className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full"
+                  style={{ background: 'var(--gradient-gold)' }}
+                />
               </h2>
             )}
             {description && (
-              <p className="mt-4 max-w-2xl text-[var(--color-fg-muted)]">{description}</p>
+              <p
+                className={cn('mt-4 max-w-2xl text-[var(--color-fg-muted)]', descriptionClassName)}
+              >
+                {description}
+              </p>
             )}
           </header>
         )}

@@ -1,6 +1,7 @@
 'use client';
 
 import { Button } from '@/components/primitives/Button';
+import { FormField } from '@/components/primitives/FormField';
 import { type FormEvent, useState } from 'react';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
@@ -36,9 +37,6 @@ export function ContactForm() {
     }
   }
 
-  const inputClass =
-    'w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg-elevated)] px-4 py-3 text-sm text-[var(--color-fg)] placeholder:text-[var(--color-fg-subtle)] focus:border-[var(--color-accent)] focus:outline-none';
-
   return (
     <form onSubmit={handleSubmit} className="grid gap-5">
       {/* honeypot */}
@@ -52,34 +50,13 @@ export function ContactForm() {
       />
 
       <div className="grid gap-5 md:grid-cols-2">
-        <label className="flex flex-col gap-2">
-          <span className="font-mono text-[10px] text-[var(--color-fg-subtle)] uppercase tracking-[0.14em]">
-            Name
-          </span>
-          <input type="text" name="name" required minLength={2} className={inputClass} />
-        </label>
-        <label className="flex flex-col gap-2">
-          <span className="font-mono text-[10px] text-[var(--color-fg-subtle)] uppercase tracking-[0.14em]">
-            Email
-          </span>
-          <input type="email" name="email" required className={inputClass} />
-        </label>
+        <FormField label="Name" type="text" name="name" required minLength={2} />
+        <FormField label="Email" type="email" name="email" required />
       </div>
-      <label className="flex flex-col gap-2">
-        <span className="font-mono text-[10px] text-[var(--color-fg-subtle)] uppercase tracking-[0.14em]">
-          Message
-        </span>
-        <textarea
-          name="message"
-          required
-          minLength={10}
-          rows={5}
-          className={`${inputClass} resize-y`}
-        />
-      </label>
+      <FormField label="Message" multiline name="message" required minLength={10} rows={5} />
       <div className="flex items-center justify-between gap-4">
         <Button size="lg" disabled={status === 'loading'}>
-          {status === 'loading' ? 'Sending…' : 'Send message'}
+          {status === 'loading' ? 'Sending\u2026' : 'Send message'}
         </Button>
         {status === 'success' && (
           <p className="font-mono text-[10px] text-[var(--color-accent)] uppercase tracking-[0.14em]">

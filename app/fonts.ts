@@ -18,3 +18,19 @@ export const fontSans = localFont({
   preload: true,
   fallback: ['ui-sans-serif', 'system-ui', 'sans-serif'],
 });
+
+export const fontMono = localFont({
+  src: '../public/fonts/JetBrainsMono-Regular.woff2',
+  variable: '--font-mono',
+  display: 'swap',
+  preload: false,
+  fallback: ['ui-monospace', 'SFMono-Regular', 'monospace'],
+});
+
+export const fontGrotesk = localFont({
+  src: '../public/fonts/SpaceGrotesk-Regular.woff2',
+  variable: '--font-grotesk',
+  display: 'swap',
+  preload: false,
+  fallback: ['sans-serif'],
+});

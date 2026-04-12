@@ -1,4 +1,4 @@
-import { fontSans, fontSerif } from '@/app/fonts';
+import { fontGrotesk, fontMono, fontSans, fontSerif } from '@/app/fonts';
 import { SmoothScroll } from '@/components/scroll/SmoothScroll';
 import { publicEnv } from '@/lib/env';
 import { Analytics } from '@vercel/analytics/next';
@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${fontSerif.variable} ${fontSans.variable}`}
+      className={`${fontSerif.variable} ${fontSans.variable} ${fontMono.variable} ${fontGrotesk.variable}`}
       suppressHydrationWarning
     >
       <body>

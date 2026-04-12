@@ -1,4 +1,7 @@
+import { getSocial } from '@/lib/social';
 import Link from 'next/link';
+
+const FOOTER_LINKS = ['github', 'linkedin', 'email'] as const;
 
 export function Footer() {
   return (
@@ -11,17 +14,21 @@ export function Footer() {
           </p>
         </div>
         <div className="flex flex-col gap-2 font-mono text-[11px] text-[var(--color-fg-muted)] uppercase tracking-[0.14em]">
-          <Link href="https://github.com/BrianASC23" target="_blank" rel="noopener noreferrer">
-            GitHub →
-          </Link>
-          <Link
-            href="https://linkedin.com/in/brian-cao-7b9a89211"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            LinkedIn →
-          </Link>
-          <Link href="mailto:brianc40722@gmail.com">Email →</Link>
+          {FOOTER_LINKS.map((key) => {
+            const social = getSocial(key);
+            if (!social) return null;
+            const isExternal = !social.href.startsWith('mailto:');
+            return (
+              <Link
+                key={social.key}
+                href={social.href}
+                target={isExternal ? '_blank' : undefined}
+                rel={isExternal ? 'noopener noreferrer' : undefined}
+              >
+                {social.label} →
+              </Link>
+            );
+          })}
         </div>
       </div>
       <p className="mt-12 text-center font-mono text-[10px] text-[var(--color-fg-subtle)] uppercase tracking-[0.18em]">

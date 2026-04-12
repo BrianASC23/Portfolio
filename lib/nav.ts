@@ -10,6 +10,7 @@ export interface NavLink {
 export const NAV_LINKS: NavLink[] = [
   { href: '/', label: 'Home' },
   { href: '/projects', label: 'Projects' },
+  { href: '/experience', label: 'Work' },
   { href: '/writing', label: 'Writing' },
   { href: '/resume/BrianCao-Resume.pdf', label: 'Resume', download: true },
 ];

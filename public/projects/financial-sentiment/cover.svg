@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#fbbf24"/>
+      <stop offset="1" stop-color="#d97706"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#22c55e"/>
+      <stop offset="1" stop-color="#16a34a"/>
+    </linearGradient>
+    <linearGradient id="red" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#ef4444"/>
+      <stop offset="1" stop-color="#dc2626"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+
+  <!-- Subtle grid -->
+  <g opacity="0.03" stroke="#fbbf24">
+    <line x1="0" y1="200" x2="1600" y2="200"/>
+    <line x1="0" y1="400" x2="1600" y2="400"/>
+    <line x1="0" y1="600" x2="1600" y2="600"/>
+    <line x1="0" y1="800" x2="1600" y2="800"/>
+  </g>
+
+  <!-- Confusion Matrix -->
+  <g transform="translate(160, 160)">
+    <!-- Title -->
+    <text x="240" y="0" text-anchor="middle" fill="#e2e8f0" font-family="sans-serif" font-size="18" font-weight="600">Confusion Matrix</text>
+
+    <!-- Axis labels -->
+    <text x="240" y="30" text-anchor="middle" fill="#64748b" font-family="sans-serif" font-size="13">Predicted Label</text>
+    <text x="-20" y="310" text-anchor="middle" fill="#64748b" font-family="sans-serif" font-size="13" transform="rotate(-90, -20, 310)">True Label</text>
+
+    <!-- Column headers -->
+    <text x="140" y="70" text-anchor="middle" fill="#22c55e" font-family="monospace" font-size="13">Positive</text>
+    <text x="280" y="70" text-anchor="middle" fill="#ef4444" font-family="monospace" font-size="13">Negative</text>
+    <text x="420" y="70" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="13">Neutral</text>
+
+    <!-- Row headers -->
+    <text x="50" y="160" text-anchor="middle" fill="#22c55e" font-family="monospace" font-size="13">Pos</text>
+    <text x="50" y="300" text-anchor="middle" fill="#ef4444" font-family="monospace" font-size="13">Neg</text>
+    <text x="50" y="440" text-anchor="middle" fill="#94a3b8" font-family="monospace" font-size="13">Neu</text>
+
+    <!-- Matrix cells -->
+    <!-- Row 1: Positive -->
+    <rect x="80" y="90" width="120" height="120" rx="8" fill="#22c55e" opacity="0.25"/>
+    <text x="140" y="158" text-anchor="middle" fill="#22c55e" font-family="monospace" font-size="28" font-weight="bold">847</text>
+    <rect x="220" y="90" width="120" height="120" rx="8" fill="#ef4444" opacity="0.05"/>
+    <text x="280" y="158" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="28">23</text>
+    <rect x="360" y="90" width="120" height="120" rx="8" fill="#94a3b8" opacity="0.05"/>
+    <text x="420" y="158" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="28">41</text>
+
+    <!-- Row 2: Negative -->
+    <rect x="80" y="230" width="120" height="120" rx="8" fill="#22c55e" opacity="0.05"/>
+    <text x="140" y="298" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="28">31</text>
+    <rect x="220" y="230" width="120" height="120" rx="8" fill="#ef4444" opacity="0.25"/>
+    <text x="280" y="298" text-anchor="middle" fill="#ef4444" font-family="monospace" font-size="28" font-weight="bold">812</text>
+    <rect x="360" y="230" width="120" height="120" rx="8" fill="#94a3b8" opacity="0.05"/>
+    <text x="420" y="298" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="28">58</text>
+
+    <!-- Row 3: Neutral -->
+    <rect x="80" y="370" width="120" height="120" rx="8" fill="#22c55e" opacity="0.05"/>
+    <text x="140" y="438" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="28">52</text>
+    <rect x="220" y="370" width="120" height="120" rx="8" fill="#ef4444" opacity="0.05"/>
+    <text x="280" y="438" text-anchor="middle" fill="#64748b" font-family="monospace" font-size="28">67</text>
+    <rect x="360" y="370" width="120" height="120" rx="8" fill="#94a3b8" opacity="0.2"/>
+    <text x="420" y="438" text-anchor="middle" fill="#e2e8f0" font-family="monospace" font-size="28" font-weight="bold">769</text>
+  </g>
+
+  <!-- Metrics panel -->
+  <g transform="translate(780, 180)">
+    <rect x="0" y="0" width="620" height="620" rx="16" fill="#1a2332" stroke="#334155" stroke-width="1"/>
+
+    <!-- Header -->
+    <text x="310" y="44" text-anchor="middle" fill="#e2e8f0" font-family="sans-serif" font-size="18" font-weight="600">Model Performance</text>
+    <line x1="40" y1="62" x2="580" y2="62" stroke="#334155"/>
+
+    <!-- Metric cards -->
+    <rect x="30" y="82" width="170" height="90" rx="10" fill="#0f172a"/>
+    <text x="115" y="112" text-anchor="middle" fill="#64748b" font-family="sans-serif" font-size="12">ACCURACY</text>
+    <text x="115" y="150" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="32" font-weight="bold">91.2%</text>
+
+    <rect x="225" y="82" width="170" height="90" rx="10" fill="#0f172a"/>
+    <text x="310" y="112" text-anchor="middle" fill="#64748b" font-family="sans-serif" font-size="12">F1 SCORE</text>
+    <text x="310" y="150" text-anchor="middle" fill="#22c55e" font-family="monospace" font-size="32" font-weight="bold">0.893</text>
+
+    <rect x="420" y="82" width="170" height="90" rx="10" fill="#0f172a"/>
+    <text x="505" y="112" text-anchor="middle" fill="#64748b" font-family="sans-serif" font-size="12">AUC-ROC</text>
+    <text x="505" y="150" text-anchor="middle" fill="#22c55e" font-family="monospace" font-size="32" font-weight="bold">0.962</text>
+
+    <!-- Loss curve -->
+    <text x="40" y="220" fill="#94a3b8" font-family="sans-serif" font-size="14">Training Loss</text>
+    <g transform="translate(30, 240)">
+      <rect width="560" height="160" rx="8" fill="#0f172a"/>
+      <!-- Axes -->
+      <line x1="40" y1="140" x2="540" y2="140" stroke="#334155"/>
+      <line x1="40" y1="20" x2="40" y2="140" stroke="#334155"/>
+      <!-- Training loss curve -->
+      <polyline points="40,30 100,60 160,80 220,95 280,105 340,110 400,113 460,115 520,116" stroke="#fbbf24" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      <!-- Validation loss curve -->
+      <polyline points="40,35 100,68 160,88 220,98 280,110 340,116 400,120 460,123 520,125" stroke="#f59e0b" stroke-width="2" fill="none" stroke-dasharray="6 4" opacity="0.6" stroke-linecap="round"/>
+      <!-- Epoch labels -->
+      <text x="40" y="156" fill="#475569" font-family="monospace" font-size="10">0</text>
+      <text x="280" y="156" fill="#475569" font-family="monospace" font-size="10">25</text>
+      <text x="520" y="156" fill="#475569" font-family="monospace" font-size="10">50</text>
+    </g>
+
+    <!-- Architecture label -->
+    <text x="40" y="450" fill="#94a3b8" font-family="sans-serif" font-size="14">Architecture</text>
+    <g transform="translate(30, 468)">
+      <!-- Pipeline blocks -->
+      <rect x="0" y="0" width="120" height="44" rx="8" fill="#f59e0b" opacity="0.15" stroke="#f59e0b" stroke-width="1" opacity="0.3"/>
+      <text x="60" y="27" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="13">Tokenizer</text>
+      <text x="135" y="27" fill="#475569" font-family="sans-serif" font-size="18">→</text>
+      <rect x="155" y="0" width="120" height="44" rx="8" fill="#f59e0b" opacity="0.15" stroke="#f59e0b" stroke-width="1" opacity="0.3"/>
+      <text x="215" y="27" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="13">Bi-LSTM</text>
+      <text x="290" y="27" fill="#475569" font-family="sans-serif" font-size="18">→</text>
+      <rect x="310" y="0" width="120" height="44" rx="8" fill="#f59e0b" opacity="0.15" stroke="#f59e0b" stroke-width="1" opacity="0.3"/>
+      <text x="370" y="27" text-anchor="middle" fill="#fbbf24" font-family="monospace" font-size="13">Attention</text>
+      <text x="445" y="27" fill="#475569" font-family="sans-serif" font-size="18">→</text>
+      <rect x="465" y="0" width="95" height="44" rx="8" fill="#22c55e" opacity="0.15" stroke="#22c55e" stroke-width="1" opacity="0.3"/>
+      <text x="512" y="27" text-anchor="middle" fill="#22c55e" font-family="monospace" font-size="13">Output</text>
+    </g>
+
+    <!-- Sample predictions -->
+    <text x="40" y="558" fill="#94a3b8" font-family="sans-serif" font-size="14">Sample Predictions</text>
+    <text x="40" y="582" fill="#22c55e" font-family="monospace" font-size="12">▲ "Revenue exceeded expectations" → POSITIVE (0.97)</text>
+    <text x="40" y="602" fill="#ef4444" font-family="monospace" font-size="12">▼ "Significant losses reported"  → NEGATIVE (0.94)</text>
+  </g>
+</svg>

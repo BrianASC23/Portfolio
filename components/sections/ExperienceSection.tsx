@@ -1,23 +1,14 @@
 'use client';
 
+import { SectionWaypoint } from '@/components/decorations/SectionWaypoint';
+import { MagneticElement } from '@/components/effects/MagneticElement';
+import { Button } from '@/components/primitives/Button';
 import { Container } from '@/components/primitives/Container';
-import { duration, ease, stagger } from '@/lib/motion';
+import { VIEWPORT_ONCE, slideInItem, staggerContainer } from '@/lib/motion-variants';
 import type { Experience } from '@/lib/schemas/experience';
+import { formatRange } from '@/lib/utils/format';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Calendar } from 'lucide-react';
-
-/* ------------------------------------------------------------------ */
-/*  Date formatting (self-contained — no server import needed)         */
-/* ------------------------------------------------------------------ */
-
-function fmtDate(ym: string): string {
-  const d = new Date(`${ym}-01`);
-  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' });
-}
-
-function formatRange(start: string, end: string): string {
-  return `${fmtDate(start)} — ${end === 'present' ? 'Present' : fmtDate(end)}`;
-}
 
 /* ------------------------------------------------------------------ */
 /*  Company logo placeholder                                           */
@@ -26,7 +17,7 @@ function formatRange(start: string, end: string): string {
 function LogoPlaceholder({ company }: { company: string }) {
   const initials = company
     .split(/[\s—-]+/)
-    .filter((w) => w.length > 0 && w[0] === w[0]!.toUpperCase())
+    .filter((w) => w.length > 0 && w[0] === w[0]?.toUpperCase())
     .slice(0, 2)
     .map((w) => w[0])
     .join('');
@@ -45,9 +36,9 @@ function LogoPlaceholder({ company }: { company: string }) {
 function ExperienceCard({ exp }: { exp: Experience }) {
   return (
     <motion.article
-      className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-md md:p-8"
-      whileHover={{ y: -2 }}
-      transition={{ duration: duration.fast, ease: ease.out }}
+      className="group rounded-2xl border border-slate-100 bg-white p-6 shadow-sm transition-[box-shadow,border-color] duration-300 ease-out hover:border-[var(--color-accent-glow)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08),0_16px_40px_rgba(0,0,0,0.06)] md:p-8"
+      whileHover={{ y: -3, scale: 1.02 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 20 }}
     >
       {/* ---- Header ---- */}
       <div className="flex items-start justify-between gap-4">
@@ -140,8 +131,14 @@ export function ExperienceSection({ experiences }: { experiences: Experience[] }
         {/* ---- Section heading ---- */}
         <header className="mb-12 md:mb-16">
           <h2 className="relative inline-block font-serif text-[length:var(--text-h2)] font-light leading-[1.05] tracking-[-0.02em] text-[var(--color-fg)]">
-            Professional Experience
-            <span className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full bg-[var(--color-accent)]" />
+            <span className="flex items-center gap-3">
+              <SectionWaypoint variant="scroll" />
+              Quests &amp; Chronicles
+            </span>
+            <span
+              className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full"
+              style={{ background: 'var(--gradient-gold)' }}
+            />
           </h2>
         </header>
 
@@ -157,31 +154,24 @@ export function ExperienceSection({ experiences }: { experiences: Experience[] }
             className="space-y-6"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true, margin: '-10% 0px' }}
-            variants={{
-              hidden: {},
-              visible: {
-                transition: { staggerChildren: stagger.loose, delayChildren: 0 },
-              },
-            }}
+            viewport={VIEWPORT_ONCE}
+            variants={staggerContainer}
           >
-            {experiences.map((exp) => (
-              <motion.div
-                key={exp.slug}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                    transition: { duration: duration.base, ease: ease.out },
-                  },
-                }}
-              >
+            {experiences.map((exp, i) => (
+              <motion.div key={exp.slug} variants={slideInItem(i % 2 === 0)}>
                 <ExperienceCard exp={exp} />
               </motion.div>
             ))}
           </motion.div>
         )}
+
+        <div className="mt-12 flex justify-center">
+          <MagneticElement as="div" strength={0.25}>
+            <Button href="/experience" variant="secondary" size="md">
+              More Experiences
+            </Button>
+          </MagneticElement>
+        </div>
       </Container>
     </section>
   );

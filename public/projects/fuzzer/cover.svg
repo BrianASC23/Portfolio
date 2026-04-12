@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0a0a0a"/>
+      <stop offset="1" stop-color="#111111"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="1000" fill="url(#bg)"/>
+
+  <!-- Scanline effect -->
+  <g opacity="0.03">
+    <line x1="0" y1="2" x2="1600" y2="2" stroke="#22c55e" stroke-width="1"/>
+    <line x1="0" y1="6" x2="1600" y2="6" stroke="#22c55e" stroke-width="1"/>
+    <line x1="0" y1="10" x2="1600" y2="10" stroke="#22c55e" stroke-width="1"/>
+    <line x1="0" y1="14" x2="1600" y2="14" stroke="#22c55e" stroke-width="1"/>
+  </g>
+
+  <!-- Terminal window -->
+  <rect x="100" y="60" width="1400" height="880" rx="12" fill="#0a0a0a" stroke="#333333" stroke-width="1"/>
+  <!-- Title bar -->
+  <rect x="100" y="60" width="1400" height="40" rx="12" fill="#1a1a1a"/>
+  <rect x="100" y="88" width="1400" height="12" fill="#1a1a1a"/>
+  <circle cx="130" cy="80" r="6" fill="#ef4444" opacity="0.8"/>
+  <circle cx="150" cy="80" r="6" fill="#eab308" opacity="0.8"/>
+  <circle cx="170" cy="80" r="6" fill="#22c55e" opacity="0.8"/>
+  <text x="800" y="85" text-anchor="middle" fill="#666666" font-family="monospace" font-size="13">fuzzer — bash — 180×50</text>
+
+  <!-- Terminal content -->
+  <g font-family="monospace" font-size="14">
+    <!-- Header -->
+    <text x="140" y="135" fill="#fbbf24" font-weight="bold">╔══════════════════════════════════════════════════════════════╗</text>
+    <text x="140" y="155" fill="#fbbf24" font-weight="bold">║     MUTATION-BASED FUZZER v2.1  —  Coverage-Guided           ║</text>
+    <text x="140" y="175" fill="#fbbf24" font-weight="bold">╚══════════════════════════════════════════════════════════════╝</text>
+
+    <!-- Config -->
+    <text x="140" y="210" fill="#22c55e">[config]</text>
+    <text x="140" y="230" fill="#94a3b8"> target    : <tspan fill="#e2e8f0">./bin/json_parser</tspan></text>
+    <text x="140" y="250" fill="#94a3b8"> corpus    : <tspan fill="#e2e8f0">seeds/ (47 files, 12.3 KB)</tspan></text>
+    <text x="140" y="270" fill="#94a3b8"> mutations : <tspan fill="#e2e8f0">bit-flip, byte-insert, havoc, splice</tspan></text>
+    <text x="140" y="290" fill="#94a3b8"> sanitizer : <tspan fill="#22c55e">ASAN + UBSAN</tspan></text>
+
+    <!-- Run stats -->
+    <text x="140" y="330" fill="#22c55e">[run]</text>
+    <text x="140" y="350" fill="#94a3b8"> exec/s     : <tspan fill="#fbbf24">4,281</tspan></text>
+    <text x="140" y="370" fill="#94a3b8"> total execs: <tspan fill="#e2e8f0">2,847,392</tspan></text>
+    <text x="140" y="390" fill="#94a3b8"> coverage   : <tspan fill="#22c55e">73.4%</tspan> edges (<tspan fill="#22c55e">↑ 2.1%</tspan>)</text>
+    <text x="140" y="410" fill="#94a3b8"> unique crashes: <tspan fill="#ef4444" font-weight="bold">7</tspan></text>
+    <text x="140" y="430" fill="#94a3b8"> hangs      : <tspan fill="#eab308">3</tspan></text>
+    <text x="140" y="450" fill="#94a3b8"> uptime     : <tspan fill="#e2e8f0">00:11:07</tspan></text>
+
+    <!-- Crashes found -->
+    <text x="140" y="490" fill="#ef4444">[crashes]</text>
+    <text x="140" y="510" fill="#ef4444"> ▸ CRASH #1</text><text x="300" y="510" fill="#94a3b8">heap-buffer-overflow   in parse_string+0x4a</text>
+    <text x="140" y="530" fill="#ef4444"> ▸ CRASH #2</text><text x="300" y="530" fill="#94a3b8">stack-buffer-overflow  in parse_number+0x2f</text>
+    <text x="140" y="550" fill="#ef4444"> ▸ CRASH #3</text><text x="300" y="550" fill="#94a3b8">null-deref             in parse_array+0x18</text>
+    <text x="140" y="570" fill="#ef4444"> ▸ CRASH #4</text><text x="300" y="570" fill="#94a3b8">use-after-free         in handle_object+0x61</text>
+    <text x="140" y="590" fill="#ef4444"> ▸ CRASH #5</text><text x="300" y="590" fill="#94a3b8">heap-buffer-overflow   in unescape_utf8+0x33</text>
+    <text x="140" y="610" fill="#eab308"> ▸ CRASH #6</text><text x="300" y="610" fill="#94a3b8">integer-overflow       in parse_exponent+0x1c</text>
+    <text x="140" y="630" fill="#eab308"> ▸ CRASH #7</text><text x="300" y="630" fill="#94a3b8">double-free            in cleanup_nodes+0x45</text>
+
+    <!-- Coverage bar -->
+    <text x="140" y="680" fill="#22c55e">[coverage map]</text>
+    <text x="140" y="700" fill="#475569">░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░</text>
+    <text x="140" y="700" fill="#22c55e">█████████████████████████████████████░</text>
+
+    <!-- Mutation log -->
+    <text x="140" y="740" fill="#475569">[2847390] mutate: havoc(seed_12.json) → 342 bytes → <tspan fill="#22c55e">new_edge</tspan></text>
+    <text x="140" y="760" fill="#475569">[2847391] mutate: bit_flip(seed_03.json) → 89 bytes → no_new</text>
+    <text x="140" y="780" fill="#475569">[2847392] mutate: splice(seed_27.json, seed_04.json) → 567 bytes → <tspan fill="#ef4444">CRASH!</tspan></text>
+
+    <!-- Blinking cursor -->
+    <text x="140" y="820" fill="#22c55e">$</text>
+    <rect x="156" y="807" width="9" height="17" fill="#22c55e" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0;0.8" dur="1.2s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+
+  <!-- Coverage sparkline (right side) -->
+  <g transform="translate(1050, 135)">
+    <text x="0" y="0" fill="#475569" font-family="monospace" font-size="12">COVERAGE OVER TIME</text>
+    <rect x="0" y="10" width="380" height="120" rx="6" fill="#111111" stroke="#222222"/>
+    <polyline points="10,110 50,105 90,95 130,88 170,80 210,72 250,66 290,60 330,55 370,52" stroke="#22c55e" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <polyline points="10,110 50,105 90,95 130,88 170,80 210,72 250,66 290,60 330,55 370,52" stroke="none" fill="#22c55e" opacity="0.05"/>
+    <text x="10" y="140" fill="#475569" font-family="monospace" font-size="10">0</text>
+    <text x="370" y="140" fill="#475569" font-family="monospace" font-size="10">2.8M</text>
+  </g>
+
+  <!-- Exec speed sparkline -->
+  <g transform="translate(1050, 300)">
+    <text x="0" y="0" fill="#475569" font-family="monospace" font-size="12">EXEC/S</text>
+    <rect x="0" y="10" width="380" height="80" rx="6" fill="#111111" stroke="#222222"/>
+    <polyline points="10,70 50,40 90,55 130,35 170,45 210,30 250,50 290,25 330,40 370,20" stroke="#fbbf24" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>
