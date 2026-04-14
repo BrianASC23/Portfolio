@@ -159,14 +159,18 @@ export function AetherPlexus() {
 
       /* Inter-particle connections */
       for (let i = 0; i < pts.length; i++) {
+        const pi = pts[i];
+        if (!pi) continue;
         for (let j = i + 1; j < pts.length; j++) {
-          const dx = pts[i]?.x - pts[j]?.x;
-          const dy = pts[i]?.y - pts[j]?.y;
+          const pj = pts[j];
+          if (!pj) continue;
+          const dx = pi.x - pj.x;
+          const dy = pi.y - pj.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist > CONNECTION_DIST) continue;
 
-          const midX = (pts[i]?.x + pts[j]?.x) / 2;
-          const midY = (pts[i]?.y + pts[j]?.y) / 2;
+          const midX = (pi.x + pj.x) / 2;
+          const midY = (pi.y + pj.y) / 2;
           const dm = cursorActive ? Math.hypot(midX - mx, midY - my) : Number.POSITIVE_INFINITY;
           const near = dm < CURSOR_RADIUS;
           const fade = 1 - dist / CONNECTION_DIST;
@@ -181,8 +185,8 @@ export function AetherPlexus() {
           }
 
           ctx.beginPath();
-          ctx.moveTo(pts[i]?.x, pts[i]?.y);
-          ctx.lineTo(pts[j]?.x, pts[j]?.y);
+          ctx.moveTo(pi.x, pi.y);
+          ctx.lineTo(pj.x, pj.y);
           ctx.stroke();
         }
       }

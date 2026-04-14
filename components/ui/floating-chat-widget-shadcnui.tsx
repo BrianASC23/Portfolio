@@ -103,13 +103,14 @@ const messageVariants: Variants = {
 
 export function FloatingChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedAgent, setSelectedAgent] = useState<string>(AI_AGENTS[0]?.id ?? 'sage');
+  const defaultAgent = AI_AGENTS[0] as Agent;
+  const [selectedAgent, setSelectedAgent] = useState<string>(defaultAgent.id);
   const [message, setMessage] = useState('');
   const widgetId = useId();
 
   const toggleOpen = useCallback(() => setIsOpen((prev) => !prev), []);
 
-  const currentAgent = AI_AGENTS.find((a) => a.id === selectedAgent) ?? AI_AGENTS[0];
+  const currentAgent = AI_AGENTS.find((a) => a.id === selectedAgent) ?? defaultAgent;
   const AgentIcon = currentAgent.icon;
 
   return (

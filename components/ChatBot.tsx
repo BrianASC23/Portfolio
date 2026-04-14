@@ -130,7 +130,8 @@ const messageVariants: Variants = {
 
 export function ChatBot() {
   const [open, setOpen] = useState(false);
-  const [selectedAgent, setSelectedAgent] = useState<string>(AI_AGENTS[0]?.id ?? 'sage');
+  const defaultAgent = AI_AGENTS[0] as Agent;
+  const [selectedAgent, setSelectedAgent] = useState<string>(defaultAgent.id);
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'bot',
@@ -143,7 +144,7 @@ export function ChatBot() {
   const inputRef = useRef<HTMLInputElement>(null);
   const streamAbort = useRef(false);
 
-  const currentAgent = AI_AGENTS.find((a) => a.id === selectedAgent) ?? AI_AGENTS[0];
+  const currentAgent = AI_AGENTS.find((a) => a.id === selectedAgent) ?? defaultAgent;
 
   // Auto-scroll to bottom when a message is added
   // biome-ignore lint/correctness/useExhaustiveDependencies: messages.length is an intentional trigger

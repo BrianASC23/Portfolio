@@ -146,7 +146,7 @@ export async function WritingSection() {
     );
   }
 
-  const featured = posts[0];
+  const featured = posts[0] as (typeof posts)[number];
   const side = posts.slice(1, 3);
 
   return (
