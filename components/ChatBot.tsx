@@ -201,7 +201,7 @@ export function ChatBot() {
     setMessages((prev) => [...prev, { role: 'user', text: trimmed }]);
 
     const response =
-      MOCK_RESPONSES[Math.floor(Math.random() * MOCK_RESPONSES.length)] ?? MOCK_RESPONSES[0];
+      MOCK_RESPONSES[Math.floor(Math.random() * MOCK_RESPONSES.length)] ?? MOCK_RESPONSES[0] ?? '';
     setTimeout(() => streamResponse(response), 800);
   }
 
