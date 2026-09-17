@@ -11,6 +11,7 @@ export const experienceSchema = z.object({
   bullets: z.array(z.string().min(1)).min(1),
   stack: z.array(z.string()).default([]),
   logo: z.string().optional(),
+  image: z.string().optional(),
   link: z.string().url().optional(),
 });
 

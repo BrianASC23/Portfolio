@@ -1,19 +1,30 @@
 @import "tailwindcss";
 
 @theme {
-  /* Color tokens — blue accent on white */
+  /* Color tokens — B&W with amber accent (light mode) */
   --color-bg: #ffffff;
   --color-bg-elevated: #ffffff;
-  --color-bg-inset: #f8f9fa;
-  --color-fg: #111111;
-  --color-fg-muted: #666666;
-  --color-fg-subtle: #999999;
+  --color-bg-inset: #f5f5f5;
+  --color-fg: #0a0a0a;
+  --color-fg-muted: #525252;
+  --color-fg-subtle: #a3a3a3;
   --color-border: #e5e5e5;
   --color-border-strong: #d4d4d4;
   --color-accent: #f59e0b;
   --color-accent-hi: #fbbf24;
   --color-accent-lo: #d97706;
   --color-accent-glow: rgba(251, 191, 36, 0.25);
+  --color-accent-soft: rgba(245, 158, 11, 0.15);
+  --color-accent-cool: #f59e0b;
+  /* Tilemap grid ruling */
+  --color-grid: rgba(0, 0, 0, 0.04);
+
+  /* Retro menu screen */
+  --color-menu-panel: #0a0a0a;
+  --color-menu-ink: #000000;
+  --color-menu-rule: #262626;
+  --color-menu-text: #fafafa;
+  --color-menu-muted: #737373;
 
   /* Radii */
   --radius-xs: 4px;
@@ -25,9 +36,9 @@
   --radius-full: 9999px;
 
   /* Typography families (wired from next/font variables) */
-  --font-family-serif: var(--font-grotesk), sans-serif;
-  --font-family-sans: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
-  --font-family-mono: var(--font-grotesk), ui-monospace, SFMono-Regular, monospace;
+  --font-family-serif: var(--font-figtree), sans-serif;
+  --font-family-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+  --font-family-mono: var(--font-figtree), ui-monospace, SFMono-Regular, monospace;
 
   /* Fluid type scale — oversized display for editorial serif headings */
   --text-display: clamp(3.5rem, 2.5rem + 6vw, 8rem);
@@ -45,22 +56,134 @@
 }
 
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
   --gradient-gold: linear-gradient(135deg, #fbbf24, #d97706);
+
+  /* ── Hero (day) ──
+     The mountain hero paints its own world, so it carries its own tokens rather
+     than borrowing the page palette: the type sitting on it has to answer to the
+     sky, not to the page background. Light is the default theme, so these are
+     the daylight values and `.dark` swaps in the dusk set below.
+
+     `--hero-art` is a url() rather than two <img> tags on purpose — only the
+     active theme's 96KB artwork is ever fetched. */
+  --hero-art: url("/hero/mountain-day.svg");
+  --hero-sky: #cfe4f7;
+  --hero-ink: #0b141c;
+  --hero-ink-muted: #4d5f70;
+  --hero-rule: #9cb6cc;
+  --hero-accent: #b45309;
+  --hero-scrim: linear-gradient(
+    to bottom,
+    rgba(226, 238, 248, 0) 0%,
+    rgba(226, 238, 248, 0.08) 42%,
+    rgba(226, 238, 248, 0.62) 72%,
+    rgba(226, 238, 248, 0.94) 100%
+  );
+
+  /* Overlay art. Pitched dark here and light in dark mode: the climber and the
+     route are drawn against open sky, so their value has to invert with it or
+     they disappear into the background. */
+  --hero-ridge: #5f7794;
+  --hero-crest: #e8f0f8;
+  --hero-pole: #33465c;
+  --hero-cloth: #e07a1f;
+  --hero-cloth-shade: #a85a12;
+  --hero-check-dark: #1d2733;
+  --hero-check-light: #ffffff;
+  --hero-hood: #e07a1f;
+  --hero-skin: #e8b98a;
+  --hero-jacket: #2f4a6b;
+  --hero-jacket-shade: #22374f;
+  --hero-trousers: #3d4a5c;
+  --hero-boots: #242c38;
+  --hero-axe: #55627a;
+  --hero-haft: #7a4f2a;
+  --hero-shadow: rgba(11, 20, 28, 0.28);
+}
+
+/* ── Dark mode overrides ── */
+.dark {
+  --color-bg: #0a0a0a;
+  --color-bg-elevated: #171717;
+  --color-bg-inset: #0a0a0a;
+  --color-fg: #fafafa;
+  --color-fg-muted: #a3a3a3;
+  --color-fg-subtle: #737373;
+  --color-border: #262626;
+  --color-border-strong: #404040;
+  --color-accent: #fbbf24;
+  --color-accent-hi: #fde68a;
+  --color-accent-lo: #f59e0b;
+  --color-accent-glow: rgba(251, 191, 36, 0.2);
+  --color-accent-soft: rgba(245, 158, 11, 0.15);
+  --color-accent-cool: #fbbf24;
+  --color-grid: rgba(255, 255, 255, 0.04);
+  --color-menu-panel: #171717;
+  --color-menu-ink: #0a0a0a;
+  --color-menu-rule: #404040;
+  --color-menu-text: #fafafa;
+  --color-menu-muted: #737373;
+  --gradient-gold: linear-gradient(135deg, #fde68a, #fbbf24);
+  --shadow-glow: 0 0 40px rgba(251, 191, 36, 0.2);
+  --shadow-glow-card: 0 1px 0 0 rgba(255, 255, 255, 0.05) inset, 0 20px 60px -30px
+    rgba(0, 0, 0, 0.5);
+  /* ── Hero (dusk) ── */
+  --hero-art: url("/hero/mountain.svg");
+  --hero-sky: #241f33;
+  --hero-ink: #f0ece4;
+  --hero-ink-muted: #8f96a1;
+  --hero-rule: #404a56;
+  --hero-accent: #fde68a;
+  --hero-scrim: linear-gradient(
+    to bottom,
+    rgba(18, 14, 30, 0) 0%,
+    rgba(18, 14, 30, 0.06) 42%,
+    rgba(18, 14, 30, 0.5) 72%,
+    rgba(18, 14, 30, 0.9) 100%
+  );
+  --hero-ridge: #3a2f4f;
+  --hero-crest: #a596ad;
+  --hero-pole: #e8e2d4;
+  --hero-cloth: #f59e0b;
+  --hero-cloth-shade: #c2760a;
+  --hero-check-dark: #14161a;
+  --hero-check-light: #f0ece4;
+  --hero-hood: #f59e0b;
+  --hero-skin: #f7e3c6;
+  --hero-jacket: #e8e2d4;
+  --hero-jacket-shade: #b9b2a4;
+  --hero-trousers: #7b8299;
+  --hero-boots: #4f5566;
+  --hero-axe: #cfd6e0;
+  --hero-haft: #a0764a;
+  --hero-shadow: rgba(0, 0, 0, 0.6);
+  color-scheme: dark;
+}
+
+/* Footer wears the hero's palette so the page ends in the same world it opens
+   with. Remapping the menu tokens here restyles the footer's cards, badges and
+   heading without each component needing a hero variant. */
+.footer-hero {
+  --color-menu-ink: var(--hero-sky);
+  --color-menu-panel: color-mix(in srgb, var(--hero-sky), var(--hero-ink) 7%);
+  --color-menu-rule: var(--hero-rule);
+  --color-menu-text: var(--hero-ink);
+  --color-menu-muted: var(--hero-ink-muted);
 }
 
 html {
   /* Override next/font variables so .font-serif / .font-sans / .font-mono all resolve to Space Grotesk */
-  --font-serif: var(--font-grotesk), sans-serif !important;
-  --font-sans: var(--font-grotesk), sans-serif !important;
-  --font-mono: var(--font-grotesk), sans-serif !important;
+  --font-serif: var(--font-figtree), sans-serif !important;
+  --font-sans: var(--font-figtree), sans-serif !important;
+  --font-mono: var(--font-figtree), sans-serif !important;
 }
 
 html,
 body {
   background: var(--color-bg);
   color: var(--color-fg);
-  font-family: var(--font-grotesk), sans-serif;
+  font-family: var(--font-figtree), sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -68,10 +191,7 @@ body {
 body {
   min-height: 100dvh;
   overflow-x: hidden;
-  /* Atmospheric mesh gradient layers */
-  background: radial-gradient(ellipse at 15% 10%, rgba(251, 191, 36, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse at 85% 90%, rgba(74, 222, 160, 0.04) 0%, transparent 60%),
-    var(--color-bg);
+  background: var(--color-bg);
 }
 
 /* Grainy paper texture overlay */
@@ -88,19 +208,9 @@ body::before {
   background-size: 300px 300px;
 }
 
-/* Hide default cursor on desktop — custom cursor takes over */
-@media (pointer: fine) {
-  body {
-    cursor: none;
-  }
-  a,
-  button,
-  [data-magnetic],
-  input,
-  textarea,
-  select {
-    cursor: none;
-  }
+.dark body::before {
+  mix-blend-mode: screen;
+  opacity: 0.04;
 }
 
 ::selection {
@@ -127,7 +237,7 @@ body::before {
 
 /* Drop-cap for editorial section intros */
 .drop-cap::first-letter {
-  font-family: "Space Grotesk", sans-serif !important;
+  font-family: var(--font-figtree), sans-serif !important;
   font-size: 3.5em;
   line-height: 0.8;
   padding-right: 0.1em;
@@ -281,12 +391,244 @@ html {
   pointer-events: none;
 }
 
+/* Pixel coding scene — typing animation */
+@keyframes pixel-typing {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(-1px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-1px);
+  }
+}
+
+/* Hero scroll cue — gentle downward bob */
+@keyframes scroll-cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(5px);
+    opacity: 1;
+  }
+}
+
+/* Retro menu — buttons slide in from the left, fading as they travel.
+   Easing is set at the call site: cubic-bezier(0.16, 1, 0.3, 1). */
+@keyframes retro-menu-slide {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Hero name — blinking block caret, hard on/off like a terminal */
+@keyframes pixel-caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Menu card — settles up into place as the section arrives */
+@keyframes retro-card-in {
+  from {
+    transform: translateY(18px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Pixel scene — blocks materialise, coarse squares resolving into the art */
+@keyframes pixel-block-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Pixel scene — eyes shut for a beat */
+@keyframes pixel-blink {
+  0%,
+  93%,
+  100% {
+    opacity: 1;
+  }
+  95%,
+  97% {
+    opacity: 0;
+  }
+}
+
+/* Pixel scene — hologram breathes like a live display */
+@keyframes holo-flicker {
+  0%,
+  100% {
+    opacity: 0.58;
+  }
+  45% {
+    opacity: 0.68;
+  }
+  70% {
+    opacity: 0.52;
+  }
+}
+
+/* Projects — halves arrive from opposite sides and meet in the middle */
+@keyframes project-in-left {
+  from {
+    transform: translateX(-32px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes project-in-right {
+  from {
+    transform: translateX(32px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Section hand-off — a whole block rising into place. Longer travel than
+   project-in-up, which is sized for individual cards rather than a section. */
+@keyframes section-slide-in {
+  from {
+    transform: translateY(48px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes project-in-up {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Section rule — draws outward from nothing */
+@keyframes section-rule-in {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+/* Dialogue-box typing — each character pops at its own delay */
+@keyframes type-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Checkpoint flags — cloth snaps between two positions, no easing */
+@keyframes flag-wave {
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(0.72);
+  }
+}
+
+/* Ascent route — dashes crawl uphill. Travel is exactly one dash + one gap
+   (1.6 + 2 in the mountain's viewBox units), so the loop is seamless. */
+@keyframes route-march {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -3.6;
+  }
+}
+
+/* 3D keyboard keycap — pixel-style raised key with press effect.
+   Each key sets --keycap-color to its brand hue for the hover glow. */
+.keycap {
+  --keycap-color: var(--color-accent);
+  box-shadow: 0 3px 0 0 var(--color-border-strong), 0 4px 0 0 var(--color-border), 0 5px 8px -2px
+    rgba(0, 0, 0, 0.12);
+}
+
+.keycap:hover {
+  border-color: color-mix(in srgb, var(--keycap-color) 40%, var(--color-border-strong));
+  box-shadow: 0 1px 0 0 var(--color-border-strong), 0 1px 0 0 var(--color-border), 0 4px 14px -2px
+    color-mix(in srgb, var(--keycap-color) 30%, transparent);
+}
+
+.keycap:active {
+  translate: 0 4px;
+  box-shadow: 0 0 0 0 var(--color-border-strong), 0 0 0 0 var(--color-border), 0 1px 2px 0
+    rgba(0, 0, 0, 0.05);
+}
+
+.dark .keycap {
+  box-shadow: 0 3px 0 0 var(--color-border-strong), 0 4px 0 0 var(--color-border), 0 5px 8px -2px
+    rgba(0, 0, 0, 0.4);
+}
+
+.dark .keycap:hover {
+  border-color: color-mix(in srgb, var(--keycap-color) 50%, var(--color-border-strong));
+  box-shadow: 0 1px 0 0 var(--color-border-strong), 0 1px 0 0 var(--color-border), 0 4px 18px -2px
+    color-mix(in srgb, var(--keycap-color) 35%, transparent);
+}
+
+.dark .keycap:active {
+  box-shadow: 0 0 0 0 var(--color-border-strong), 0 0 0 0 var(--color-border), 0 1px 2px 0
+    rgba(0, 0, 0, 0.2);
+}
+
 /* Global reduced-motion override */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;

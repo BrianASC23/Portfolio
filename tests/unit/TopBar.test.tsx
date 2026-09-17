@@ -17,9 +17,9 @@ describe('TopBar', () => {
     expect(screen.getByRole('link', { name: /^resume$/i })).toBeInTheDocument();
   });
 
-  it('renders the Contact pill CTA as a mailto link', () => {
+  it('renders the Contact pill CTA linking to the contact page', () => {
     render(<TopBar />);
     const cta = screen.getByRole('link', { name: /contact/i });
-    expect(cta).toHaveAttribute('href', 'mailto:brianc40722@gmail.com');
+    expect(cta).toHaveAttribute('href', '/contact');
   });
 });

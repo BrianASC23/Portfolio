@@ -1,3 +1,4 @@
+import { Figtree } from 'next/font/google';
 import localFont from 'next/font/local';
 
 export const fontSerif = localFont({
@@ -27,10 +28,10 @@ export const fontMono = localFont({
   fallback: ['ui-monospace', 'SFMono-Regular', 'monospace'],
 });
 
-export const fontGrotesk = localFont({
-  src: '../public/fonts/SpaceGrotesk-Regular.woff2',
-  variable: '--font-grotesk',
+export const fontFigtree = Figtree({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-figtree',
   display: 'swap',
-  preload: false,
   fallback: ['sans-serif'],
 });

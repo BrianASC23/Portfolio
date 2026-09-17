@@ -27,6 +27,9 @@ function unwrapCdata(val: unknown): string {
 function toExcerpt(html: string, max = 220): string {
   const stripped = html
     .replace(/<figure[\s\S]*?<\/figure>/g, '')
+    // Block boundaries become spaces so adjacent paragraphs don't run together;
+    // inline tags are dropped outright so "<em>ghost</em>." stays "ghost.".
+    .replace(/<\/(p|h[1-6]|li|blockquote|pre)>|<br\s*\/?>/g, ' ')
     .replace(/<[^>]+>/g, '')
     .replace(/\s+/g, ' ')
     .trim();

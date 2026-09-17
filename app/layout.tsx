@@ -1,4 +1,5 @@
-import { fontGrotesk, fontMono, fontSans, fontSerif } from '@/app/fonts';
+import { fontFigtree, fontMono, fontSans, fontSerif } from '@/app/fonts';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import { SmoothScroll } from '@/components/scroll/SmoothScroll';
 import { publicEnv } from '@/lib/env';
 import { Analytics } from '@vercel/analytics/next';
@@ -9,8 +10,8 @@ import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL(publicEnv.NEXT_PUBLIC_SITE_URL),
   title: {
-    default: 'Brian Cao — Full-stack engineer',
-    template: '%s · Brian Cao',
+    default: 'Brian Cao | Home',
+    template: 'Brian Cao | %s',
   },
   description:
     'Brian Cao is a full-stack engineer and Stony Brook CS honors student building systems at the edge of software and AI.',
@@ -27,8 +28,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#ffffff',
-  colorScheme: 'light',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' },
+  ],
   width: 'device-width',
   initialScale: 1,
 };
@@ -37,11 +40,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${fontSerif.variable} ${fontSans.variable} ${fontMono.variable} ${fontGrotesk.variable}`}
+      className={`${fontSerif.variable} ${fontSans.variable} ${fontMono.variable} ${fontFigtree.variable}`}
       suppressHydrationWarning
     >
       <body>
-        <SmoothScroll>{children}</SmoothScroll>
+        <ThemeProvider>
+          <SmoothScroll>{children}</SmoothScroll>
+        </ThemeProvider>
         <Analytics />
         <SpeedInsights />
       </body>

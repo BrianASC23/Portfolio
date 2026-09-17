@@ -1,6 +1,5 @@
-import { StaggerGroup } from '@/components/motion/StaggerGroup';
 import { Section } from '@/components/primitives/Section';
-import { WritingCard } from '@/components/writing/WritingCard';
+import { WritingArchive } from '@/components/writing/WritingArchive';
 import { WritingEmptyState } from '@/components/writing/WritingEmptyState';
 import { getMediumPosts } from '@/lib/writing/medium';
 import type { Metadata } from 'next';
@@ -18,19 +17,11 @@ export default async function WritingPage() {
   return (
     <Section
       id="writing-index"
-      eyebrow="Writing"
-      title="Notes & essays"
-      description="Originally published on Medium. Full posts live there; previews live here."
+      ariaLabel="Writing"
+      title="Blogs"
+      description="Originally published on Medium."
     >
-      {posts.length === 0 ? (
-        <WritingEmptyState />
-      ) : (
-        <StaggerGroup className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {posts.map((post) => (
-            <WritingCard key={post.id} post={post} />
-          ))}
-        </StaggerGroup>
-      )}
+      {posts.length === 0 ? <WritingEmptyState /> : <WritingArchive posts={posts} />}
     </Section>
   );
 }

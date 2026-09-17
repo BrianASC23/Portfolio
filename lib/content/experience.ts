@@ -16,7 +16,15 @@ function loadAll(): Experience[] {
   });
 }
 
+/** Ongoing roles sort after any finished one that started the same month. */
+function endKey(end: Experience['end']): string {
+  return end === 'present' ? '9999-99' : end;
+}
+
+/** Newest first by start date; roles that started together are ordered by end date. */
 export function getAllExperiences(): Experience[] {
   if (!cache) cache = loadAll();
-  return [...cache].sort((a, b) => b.start.localeCompare(a.start));
+  return [...cache].sort(
+    (a, b) => b.start.localeCompare(a.start) || endKey(b.end).localeCompare(endKey(a.end)),
+  );
 }

@@ -15,7 +15,10 @@ describe('project content loader', () => {
 
   it('looks up by slug', () => {
     const project = getProjectBySlug('advising-bot');
-    expect(project?.title).toBe('Advising Bot');
+    // Asserts the lookup resolves, not the copy — titles are content and change
+    // with the resume behind them.
+    expect(project?.slug).toBe('advising-bot');
+    expect(project?.title).toBeTruthy();
   });
 
   it('returns undefined for missing slug', () => {

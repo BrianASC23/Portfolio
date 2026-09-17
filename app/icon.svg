@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="4" fill="#ffffff"/>
+  <!-- textLength pins the width so the glyphs fit whatever system font renders them -->
+  <text x="16" y="24" text-anchor="middle" textLength="27" lengthAdjust="spacingAndGlyphs" fill="#111111" font-family="Inter, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-size="22" font-weight="800">Bc</text>
+</svg>

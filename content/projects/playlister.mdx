@@ -1,15 +1,15 @@
 ---
 slug: playlister
 title: Playlister
-tagline: Collaborative playlist builder in the MERN stack
+tagline: Full-stack playlist management in the MERN stack
 summary: >-
-  A full-stack MERN app that lets friends build, share, and comment on playlists. My first serious exposure to auth, state management, and real database design.
-role: Full-stack (school project)
-timeframe: "2024"
+  A React and Node playlist manager with real-time state synchronization, undo/redo editing, and a REST API over structured MongoDB schemas with embedded song data.
+role: Full-stack
+timeframe: Aug 2025 – Dec 2025
 status: shipped
 featured: false
 order: 3
-stack: [MongoDB, Express, React, Node.js, JWT]
+stack: [React, Node.js, Express, MongoDB]
 tags: [full-stack, frontend]
 links:
   github: https://github.com/BrianASC23/playlister
@@ -20,6 +20,16 @@ cover:
 
 ## Scope
 
-Authenticated playlists, nested comments, a drag-and-drop editor, and a shareable public view.
-First time I hit real indexing problems (N+1 on comments) and had to actually think about
-database shape.
+A full-stack playlist management application built with React and Node.js, supporting dynamic
+user interactions with real-time state synchronization.
+
+## What it does
+
+- **Client state.** Client-side state management handling complex UI behaviour — undo/redo,
+  edit modals, and responsive components.
+- **API.** RESTful endpoints in Express over structured MongoDB schemas, supporting playlist
+  CRUD operations and embedded song data.
+
+This was where state management stopped being a tutorial exercise: undo/redo forces you to
+model every edit as a reversible operation rather than a mutation, and that changes how you
+design the whole client.

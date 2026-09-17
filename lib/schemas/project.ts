@@ -21,6 +21,7 @@ export const projectSchema = z.object({
   featured: z.boolean().default(false),
   order: z.number().int().default(999),
   stack: z.array(z.string()),
+  bullets: z.array(z.string().min(1)).default([]),
   tags: z.array(projectTag),
   links: z
     .object({
@@ -30,6 +31,8 @@ export const projectSchema = z.object({
       paper: z.string().url().optional(),
     })
     .default({}),
+  /** Wide image used by the home page's 50/50 rows; falls back to `cover.src`. */
+  homeCover: z.string().optional(),
   cover: z.object({
     src: z.string().min(1),
     alt: z.string().min(1),

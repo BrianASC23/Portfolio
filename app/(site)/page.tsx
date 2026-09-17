@@ -1,28 +1,22 @@
-import { GhostForest } from '@/components/decorations/GhostForest';
 import { HomeHero } from '@/components/hero/HomeHero';
-import { ContactSection } from '@/components/sections/ContactSection';
-import { ExperienceSection } from '@/components/sections/ExperienceSection';
-import { FeaturedProjectsSection } from '@/components/sections/FeaturedProjectsSection';
-import { WritingSection } from '@/components/sections/WritingSection';
-import { getAllExperiences } from '@/lib/content/experience';
-import { getFeaturedProjects } from '@/lib/content/projects';
+import { ExperienceTimelineSection } from '@/components/sections/ExperienceTimelineSection';
+import { ProjectsSection } from '@/components/sections/ProjectsSection';
+import { SkillsSection } from '@/components/sections/SkillsSection';
 
 export const revalidate = 3600;
 
+/**
+ * Home: the pinned summit sequence, which ends on the bio card, then projects,
+ * experience and skills. Everything else lives on its own route, reached from
+ * the top bar.
+ */
 export default function HomePage() {
-  const experiences = getAllExperiences();
-  const projects = getFeaturedProjects();
-
   return (
     <>
       <HomeHero />
-      <div className="relative">
-        <GhostForest />
-        <FeaturedProjectsSection projects={projects} />
-        <ExperienceSection experiences={experiences} />
-        <WritingSection />
-        <ContactSection />
-      </div>
+      <ProjectsSection />
+      <ExperienceTimelineSection />
+      <SkillsSection />
     </>
   );
 }

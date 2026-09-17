@@ -10,6 +10,21 @@ describe('experience loader', () => {
     const lastStart = items[items.length - 1]?.start ?? '0000-00';
     expect(firstStart.localeCompare(lastStart)).toBeGreaterThanOrEqual(0);
   });
+
+  it('orders every entry newest first, breaking start-date ties by end date', () => {
+    const endKey = (end: string) => (end === 'present' ? '9999-99' : end);
+    const items = getAllExperiences();
+    for (let i = 1; i < items.length; i++) {
+      const prev = items[i - 1];
+      const curr = items[i];
+      if (!prev || !curr) continue;
+      const byStart = prev.start.localeCompare(curr.start);
+      expect(byStart).toBeGreaterThanOrEqual(0);
+      if (byStart === 0) {
+        expect(endKey(prev.end).localeCompare(endKey(curr.end))).toBeGreaterThanOrEqual(0);
+      }
+    }
+  });
 });
 
 describe('site loader', () => {

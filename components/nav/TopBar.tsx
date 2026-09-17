@@ -1,6 +1,7 @@
 import { NAV_LINKS } from '@/lib/nav';
 import Link from 'next/link';
 import { MobileMenu } from './MobileMenu';
+import { ThemeToggle } from './ThemeToggle';
 
 export function TopBar() {
   return (
@@ -31,6 +32,7 @@ export function TopBar() {
               </Link>
             ),
           )}
+          <ThemeToggle />
           <Link
             href="/contact"
             className="rounded-full bg-[var(--color-accent)] px-4 py-1.5 text-sm font-medium text-white transition-colors hover:bg-[var(--color-accent-hi)]"

@@ -1,45 +1,49 @@
 ---
 slug: advising-bot
-title: Advising Bot
-tagline: A RAG agent that replaces your Stony Brook academic advisor
+title: Stony Brook Academic Advising Bot
+tagline: A retrieval-grounded advising assistant for Stony Brook students
 summary: >-
-  A retrieval-augmented chatbot built on LangGraph and Pinecone that ingests the entire Stony Brook course bulletin and answers degree planning, prerequisite, and scheduling questions with source-grounded citations.
+  A full-stack advising assistant that ingests Stony Brook degree requirements and policies, retrieves them through a semantic vector store, and answers student questions with strictly grounded summaries.
 role: Solo builder
-timeframe: 2025 – present
+timeframe: Mar 2026 – present
 status: in-progress
 featured: true
 order: 1
-stack: [Python, LangGraph, Pinecone, OpenAI, FastAPI, Next.js]
-tags: [ai-ml, backend]
+stack: [Python, Flask, Next.js, Tailwind, Supabase, Pinecone, LangGraph]
+tags: [ai-ml, full-stack]
+bullets:
+  - Built a Next.js and Tailwind frontend for asking degree planning questions with real-time streaming responses.
+  - Engineered a Python Flask backend that ingests degree requirements and policies to streamline advising workflows.
+  - Designed a semantic vector store on Pinecone and Supabase, indexing scraped institutional data so answers resolve against real source material.
+  - Implemented LLM summarization under strict context grounding via LangGraph, keeping recommendations concise and tied to retrieved sources.
+  - Automated scraping and ingestion of institutional data, cutting the manual lookup time advisors would otherwise spend.
 links:
-  github: https://github.com/BrianASC23/advising-bot
+  github: https://github.com/xiang1103/Advising_Bot
+homeCover: /sprites/Advising_Bot_Photo.png
 cover:
   src: /projects/advising-bot/cover.svg
   alt: Advising Bot chat interface
-metrics:
-  - { label: Bulletin pages indexed, value: "2,400+" }
-  - { label: Mean answer latency, value: "<1.8s" }
-  - { label: Retrieval recall@5, value: "92%" }
 ---
 
 ## The problem
 
-Stony Brook's course bulletin is 2,400+ pages of prerequisites, degree plans, upper-division
-requirements, and corner cases. Academic advising appointments have a ~3 week wait time.
-Students need answers in minutes, not weeks.
+Degree requirements, prerequisites, and policy exceptions are spread across documents that
+students and advisors both have to read carefully. The answers exist — they are just expensive
+to look up, and getting one wrong costs a semester.
 
 ## What I built
 
-An end-to-end RAG agent stack:
-
-- **Ingestion.** Scrapes the public bulletin into structured Markdown with section-anchored
-  metadata (department, course number, level).
-- **Retrieval.** Pinecone namespaces per department + HyDE query rewriting.
-- **Planning.** A LangGraph orchestrator with a planner → retriever → verifier → answer loop.
-- **Grounding.** Every answer surfaces the exact bulletin section it cites.
+- **Frontend.** A Next.js and Tailwind interface for asking degree planning questions.
+- **Backend.** A Python Flask service that ingests degree requirements and policies to
+  streamline advising workflows.
+- **Retrieval.** A semantic vector store built on Pinecone and Supabase, indexing scraped
+  institutional data so answers resolve against real source material.
+- **Grounding.** LLM summarization under strict context grounding, so recommendations stay
+  concise and tied to what was actually retrieved.
+- **Ingestion.** Automated scraping and ingestion, cutting the manual lookup time advisors
+  would otherwise spend.
 
 ## Why it matters
 
-Beyond the GPA-math tricks, this is the clearest expression of what I want to do: take an
-unstructured, high-stakes domain and turn it into a system that a real person would actually
-trust with a real decision.
+This is the clearest expression of what I want to do: take an unstructured, high-stakes domain
+and turn it into a system a real person would trust with a real decision.

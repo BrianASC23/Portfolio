@@ -5,32 +5,36 @@ import { cn } from '@/lib/utils/cn';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useState } from 'react';
+import { ThemeToggle } from './ThemeToggle';
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <button
-        type="button"
-        aria-label={open ? 'Close menu' : 'Open menu'}
-        aria-expanded={open}
-        onClick={() => setOpen((o) => !o)}
-        className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-border)] text-[var(--color-fg)] md:hidden"
-      >
-        <span
-          className={cn(
-            'block h-px w-4 bg-current transition',
-            open && 'translate-y-[3px] rotate-45',
-          )}
-        />
-        <span
-          className={cn(
-            'absolute block h-px w-4 bg-current transition',
-            open && '-translate-y-[3px] -rotate-45',
-          )}
-        />
-      </button>
+      <div className="flex items-center gap-2 md:hidden">
+        <ThemeToggle />
+        <button
+          type="button"
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
+          onClick={() => setOpen((o) => !o)}
+          className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-border)] text-[var(--color-fg)]"
+        >
+          <span
+            className={cn(
+              'block h-px w-4 bg-current transition',
+              open && 'translate-y-[3px] rotate-45',
+            )}
+          />
+          <span
+            className={cn(
+              'absolute block h-px w-4 bg-current transition',
+              open && '-translate-y-[3px] -rotate-45',
+            )}
+          />
+        </button>
+      </div>
 
       <AnimatePresence>
         {open && (

@@ -8,6 +8,8 @@ const SITE_DIR = join(process.cwd(), 'content', 'site');
 const bioFrontmatter = z.object({
   name: z.string(),
   role: z.string(),
+  /** One-line tagline under the name on the bio card; replaces the role line when set. */
+  headline: z.string().optional(),
   location: z.string().optional(),
   school: z.string().optional(),
 });

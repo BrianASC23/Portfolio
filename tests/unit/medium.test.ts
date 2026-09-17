@@ -18,6 +18,14 @@ const fixture = `<?xml version="1.0" encoding="UTF-8"?>
 </rss>`;
 
 describe('parseMediumFeed', () => {
+  it('keeps a space between paragraphs in the excerpt', () => {
+    const xml = fixture.replace(
+      '<p>This is a story about RAG agents. It covers retrieval, grounding, and evaluation in depth.</p>',
+      '<p>I was a <em>ghost</em>.</p><p>I was busy.</p>',
+    );
+    expect(parseMediumFeed(xml)[0]?.excerpt).toBe('I was a ghost. I was busy.');
+  });
+
   it('parses items into WritingPost objects', () => {
     const posts = parseMediumFeed(fixture);
     expect(posts).toHaveLength(1);

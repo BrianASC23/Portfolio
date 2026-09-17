@@ -1,0 +1,54 @@
+---
+slug: cyanoagent
+title: CyanoAgent
+tagline: A database-grounded knowledge graph for an LLM research assistant
+summary: >-
+  A knowledge graph grounding an LLM research assistant for cyanobacteria genomics, reaching 96% accuracy on gene-identification queries against 4% for a baseline LLM, with a trust model that keeps unverified claims out of its answers.
+role: AI Research Fellow, WUSEF
+timeframe: May 2026 – Aug 2026
+status: shipped
+featured: true
+order: 2
+stack: [Python, Knowledge Graphs, LLMs]
+tags: [ai-ml, data]
+bullets:
+  - Developed a database-grounded knowledge graph for an LLM research assistant, reaching 96% accuracy on gene-identification queries against 4% for a baseline LLM.
+  - Designed a three-tier trust system (verified, extracted, inferred) controlling how facts propagate through the graph, with guardrails blocking unverified claims from being presented as fact.
+  - Diagnosed and fixed data-resolution bugs causing incorrect gene and organism matches, correcting output accuracy across every supported species.
+  - Implemented a multi-stage hypothesis pipeline aggregating evidence across 6 databases, using Claude Opus to draft structured research proposals behind a target-identity validation guardrail.
+links:
+  github: https://github.com/BrianASC23/Cyanoagent
+homeCover: /sprites/Cyanoagent_pic.png
+cover:
+  src: /sprites/Cyanoagent_pic.png
+  alt: CyanoAgent
+metrics:
+  - { label: Gene-ID accuracy, value: "96%" }
+  - { label: Baseline LLM, value: "4%" }
+  - { label: Databases aggregated, value: "6" }
+---
+
+## The problem
+
+A general-purpose LLM asked about cyanobacteria gene identification was right 4% of the time.
+The knowledge exists across curated biological databases — the model just had no grounded path
+to it, and no way to signal when it was guessing.
+
+## What I built
+
+- **Grounded knowledge graph.** A database-backed graph the assistant queries instead of
+  recalling, taking gene-identification accuracy from 4% to 96%.
+- **Three-tier trust model.** Every fact is marked verified, extracted, or inferred, which
+  controls how it propagates through the graph. Guardrails block unverified claims from being
+  presented as fact.
+- **Data resolution fixes.** Diagnosed and fixed bugs producing incorrect gene and organism
+  matches, correcting output accuracy across every supported species.
+- **Hypothesis pipeline.** A multi-stage pipeline aggregating evidence across 6 databases and
+  using Claude Opus to draft structured research proposals, behind a target-identity
+  validation guardrail.
+
+## Why it matters
+
+The accuracy number is the headline, but the trust tiers are the part I care about. A research
+assistant that is confidently wrong is worse than no assistant, so the interesting design work
+was in making the system able to say which of its claims are load-bearing.
