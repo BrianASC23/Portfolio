@@ -1,3 +1,4 @@
+import { Mark } from '@/components/brand/Mark';
 import { Container } from '@/components/primitives/Container';
 import { getBio } from '@/lib/content/site';
 
@@ -9,6 +10,43 @@ function Meta({ label, children }: { label: string; children: string }) {
       </dt>
       <dd className="m-0 text-[15px] leading-relaxed text-[var(--color-fg-muted)]">{children}</dd>
     </div>
+  );
+}
+
+/**
+ * The name, set apart from the sentence it sits in.
+ *
+ * Sized in `em` throughout so the bubble tracks the fluid display scale instead
+ * of needing a breakpoint per step. `box-decoration-break: clone` keeps both
+ * halves fully painted if the name ever does land across a line break.
+ */
+function NameBubble({ name }: { name: string }) {
+  return (
+    <span className="whitespace-nowrap">
+      <Mark className="mr-[0.1em] inline-block h-[0.26em] w-[0.26em] translate-y-[-0.42em] text-[var(--color-accent)]" />
+      <span className="rounded-[0.22em] bg-[var(--color-accent)] px-[0.14em] pb-[0.05em] text-[var(--color-bg)] [box-decoration-break:clone] [-webkit-box-decoration-break:clone]">
+        {name}
+      </span>
+    </span>
+  );
+}
+
+/**
+ * Splits the statement around the name so the name can carry its own treatment
+ * while the sentence stays a single authored string in `bio.mdx`. If the name
+ * is not present in the statement the sentence renders plain — the content
+ * stays correct even when the two drift apart.
+ */
+function Statement({ statement, name }: { statement: string; name: string }) {
+  const at = statement.indexOf(name);
+  if (at === -1) return <>{statement}</>;
+
+  return (
+    <>
+      {statement.slice(0, at)}
+      <NameBubble name={name} />
+      {statement.slice(at + name.length)}
+    </>
   );
 }
 
@@ -29,7 +67,7 @@ export function StatementHero() {
             Libre Baskerville; narrower runs to four, wider saturates at the
             text's natural width and loses the rag. */}
         <h1 className="max-w-[18ch] font-[family-name:var(--font-family-display)] text-[length:var(--text-display)] leading-[1.14] tracking-[-0.015em] text-[var(--color-fg)]">
-          {frontmatter.statement}
+          <Statement statement={frontmatter.statement} name={frontmatter.name} />
         </h1>
 
         <dl className="mt-14 grid max-w-3xl gap-10 sm:grid-cols-2 md:mt-16">
