@@ -59,7 +59,7 @@ export default function ContactPage() {
               <em
                 className="italic"
                 style={{
-                  background: 'var(--gradient-gold)',
+                  background: 'var(--gradient-accent)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                 }}
