@@ -1,30 +1,38 @@
 @import "tailwindcss";
 
 @theme {
-  /* Color tokens — B&W with amber accent (light mode) */
-  --color-bg: #ffffff;
-  --color-bg-elevated: #ffffff;
-  --color-bg-inset: #f5f5f5;
-  --color-fg: #0a0a0a;
-  --color-fg-muted: #525252;
-  --color-fg-subtle: #a3a3a3;
-  --color-border: #e5e5e5;
-  --color-border-strong: #d4d4d4;
-  --color-accent: #f59e0b;
-  --color-accent-hi: #fbbf24;
-  --color-accent-lo: #d97706;
-  --color-accent-glow: rgba(251, 191, 36, 0.25);
-  --color-accent-soft: rgba(245, 158, 11, 0.15);
-  --color-accent-cool: #f59e0b;
-  /* Tilemap grid ruling */
-  --color-grid: rgba(0, 0, 0, 0.04);
+  /* ── Editorial palette ──
+     Warm paper rather than pure white: the oversized serif sits on it without
+     the glare an #fff ground gives at display sizes.
 
-  /* Retro menu screen */
-  --color-menu-panel: #0a0a0a;
-  --color-menu-ink: #000000;
-  --color-menu-rule: #262626;
-  --color-menu-text: #fafafa;
-  --color-menu-muted: #737373;
+     Lavender accent. True lavender (#e6e6fa) is far too pale to carry text on
+     a near-white ground, so the accent proper is a lavender-leaning violet
+     dark enough to clear 4.5:1 and usable for body-sized links rather than
+     decoration alone. The lighter, more obviously lavender tints carry fills,
+     glows and the dark-mode values, where contrast is not the constraint. */
+  --color-bg: #fafaf7;
+  --color-bg-elevated: #ffffff;
+  --color-bg-inset: #f2f1ec;
+  --color-fg: #15171a;
+  --color-fg-muted: #565c64;
+  --color-fg-subtle: #767c85;
+  --color-border: #e4e2dc;
+  --color-border-strong: #d2cfc6;
+  --color-accent: #7c3aed;
+  /* Lighter tint — fills, marks and rules only. At 4.05:1 on paper it is below
+     the threshold for normal-size text, so never put body copy on it. */
+  --color-accent-hi: #8b5cf6;
+  /* Darker tint, for hover on an accent-filled surface: a solid button has to
+     get darker on hover, not lighter, or the label loses contrast. */
+  --color-accent-lo: #5b21b6;
+  --color-accent-glow: rgba(139, 92, 246, 0.22);
+
+  /* ── Dither screen ──
+     The halftone motif. A dot grid laid over a gradient, generated rather than
+     shipped as artwork, so a project thumbnail costs no image request.
+     `--dither-cell` is the screen pitch; dots scale with it. */
+  --dither-cell: 5px;
+  --dither-dot: rgba(255, 255, 255, 0.3);
 
   /* Radii */
   --radius-xs: 4px;
@@ -35,13 +43,20 @@
   --radius-2xl: 32px;
   --radius-full: 9999px;
 
-  /* Typography families (wired from next/font variables) */
-  --font-family-serif: var(--font-figtree), sans-serif;
-  --font-family-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
-  --font-family-mono: var(--font-figtree), ui-monospace, SFMono-Regular, monospace;
+  /* Typography families (wired from next/font variables in app/fonts.ts).
+     Three faces, three jobs: Instrument Serif for display, Inter for body and
+     UI, JetBrains Mono for eyebrows, metadata and stack tags. */
+  --font-family-display: var(--font-display), Georgia, ui-serif, serif;
+  --font-family-serif: var(--font-serif), Georgia, ui-serif, serif;
+  --font-family-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-family-mono: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
 
-  /* Fluid type scale — oversized display for editorial serif headings */
-  --text-display: clamp(3.5rem, 2.5rem + 6vw, 8rem);
+  /* Fluid type scale.
+     Display is sized for Libre Baskerville, which is a body face: its large
+     x-height makes it read a size larger than a display serif would at the
+     same value, so it tops out at 76px rather than the 92px Instrument Serif
+     wanted. Everything below still belongs to Instrument Serif. */
+  --text-display: clamp(2.375rem, 1.7rem + 3.5vw, 4.75rem);
   --text-h1: clamp(2.5rem, 1.8rem + 3.5vw, 4.5rem);
   --text-h2: clamp(2rem, 1.5rem + 2.5vw, 3.25rem);
   --text-h3: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
@@ -50,140 +65,43 @@
   --text-micro: 0.75rem;
 
   /* Shadows */
-  --shadow-glow: 0 0 40px rgba(251, 191, 36, 0.15);
+  --shadow-glow: 0 0 40px rgba(139, 92, 246, 0.15);
   --shadow-glow-card: 0 1px 0 0 rgba(255, 255, 255, 0.8) inset, 0 20px 60px -30px
     rgba(0, 0, 0, 0.15);
 }
 
 :root {
   color-scheme: light dark;
-  --gradient-gold: linear-gradient(135deg, #fbbf24, #d97706);
-
-  /* ── Hero (day) ──
-     The mountain hero paints its own world, so it carries its own tokens rather
-     than borrowing the page palette: the type sitting on it has to answer to the
-     sky, not to the page background. Light is the default theme, so these are
-     the daylight values and `.dark` swaps in the dusk set below.
-
-     `--hero-art` is a url() rather than two <img> tags on purpose — only the
-     active theme's 96KB artwork is ever fetched. */
-  --hero-art: url("/hero/mountain-day.svg");
-  --hero-sky: #cfe4f7;
-  --hero-ink: #0b141c;
-  --hero-ink-muted: #4d5f70;
-  --hero-rule: #9cb6cc;
-  --hero-accent: #b45309;
-  --hero-scrim: linear-gradient(
-    to bottom,
-    rgba(226, 238, 248, 0) 0%,
-    rgba(226, 238, 248, 0.08) 42%,
-    rgba(226, 238, 248, 0.62) 72%,
-    rgba(226, 238, 248, 0.94) 100%
-  );
-
-  /* Overlay art. Pitched dark here and light in dark mode: the climber and the
-     route are drawn against open sky, so their value has to invert with it or
-     they disappear into the background. */
-  --hero-ridge: #5f7794;
-  --hero-crest: #e8f0f8;
-  --hero-pole: #33465c;
-  --hero-cloth: #e07a1f;
-  --hero-cloth-shade: #a85a12;
-  --hero-check-dark: #1d2733;
-  --hero-check-light: #ffffff;
-  --hero-hood: #e07a1f;
-  --hero-skin: #e8b98a;
-  --hero-jacket: #2f4a6b;
-  --hero-jacket-shade: #22374f;
-  --hero-trousers: #3d4a5c;
-  --hero-boots: #242c38;
-  --hero-axe: #55627a;
-  --hero-haft: #7a4f2a;
-  --hero-shadow: rgba(11, 20, 28, 0.28);
+  --gradient-accent: linear-gradient(135deg, #8b5cf6, #5b21b6);
 }
 
 /* ── Dark mode overrides ── */
 .dark {
-  --color-bg: #0a0a0a;
-  --color-bg-elevated: #171717;
-  --color-bg-inset: #0a0a0a;
-  --color-fg: #fafafa;
-  --color-fg-muted: #a3a3a3;
-  --color-fg-subtle: #737373;
-  --color-border: #262626;
-  --color-border-strong: #404040;
-  --color-accent: #fbbf24;
-  --color-accent-hi: #fde68a;
-  --color-accent-lo: #f59e0b;
-  --color-accent-glow: rgba(251, 191, 36, 0.2);
-  --color-accent-soft: rgba(245, 158, 11, 0.15);
-  --color-accent-cool: #fbbf24;
-  --color-grid: rgba(255, 255, 255, 0.04);
-  --color-menu-panel: #171717;
-  --color-menu-ink: #0a0a0a;
-  --color-menu-rule: #404040;
-  --color-menu-text: #fafafa;
-  --color-menu-muted: #737373;
-  --gradient-gold: linear-gradient(135deg, #fde68a, #fbbf24);
-  --shadow-glow: 0 0 40px rgba(251, 191, 36, 0.2);
+  --color-bg: #0e0f11;
+  --color-bg-elevated: #16181b;
+  --color-bg-inset: #0a0b0c;
+  --color-fg: #f5f3ee;
+  --color-fg-muted: #a8aeb6;
+  --color-fg-subtle: #878d96;
+  --color-border: #26292e;
+  --color-border-strong: #3a3e45;
+  --color-accent: #c4b5fd;
+  --color-accent-hi: #ddd6fe;
+  --color-accent-lo: #a78bfa;
+  --color-accent-glow: rgba(167, 139, 250, 0.2);
+  --dither-dot: rgba(255, 255, 255, 0.26);
+  --gradient-accent: linear-gradient(135deg, #ddd6fe, #c4b5fd);
+  --shadow-glow: 0 0 40px rgba(167, 139, 250, 0.2);
   --shadow-glow-card: 0 1px 0 0 rgba(255, 255, 255, 0.05) inset, 0 20px 60px -30px
     rgba(0, 0, 0, 0.5);
-  /* ── Hero (dusk) ── */
-  --hero-art: url("/hero/mountain.svg");
-  --hero-sky: #241f33;
-  --hero-ink: #f0ece4;
-  --hero-ink-muted: #8f96a1;
-  --hero-rule: #404a56;
-  --hero-accent: #fde68a;
-  --hero-scrim: linear-gradient(
-    to bottom,
-    rgba(18, 14, 30, 0) 0%,
-    rgba(18, 14, 30, 0.06) 42%,
-    rgba(18, 14, 30, 0.5) 72%,
-    rgba(18, 14, 30, 0.9) 100%
-  );
-  --hero-ridge: #3a2f4f;
-  --hero-crest: #a596ad;
-  --hero-pole: #e8e2d4;
-  --hero-cloth: #f59e0b;
-  --hero-cloth-shade: #c2760a;
-  --hero-check-dark: #14161a;
-  --hero-check-light: #f0ece4;
-  --hero-hood: #f59e0b;
-  --hero-skin: #f7e3c6;
-  --hero-jacket: #e8e2d4;
-  --hero-jacket-shade: #b9b2a4;
-  --hero-trousers: #7b8299;
-  --hero-boots: #4f5566;
-  --hero-axe: #cfd6e0;
-  --hero-haft: #a0764a;
-  --hero-shadow: rgba(0, 0, 0, 0.6);
   color-scheme: dark;
-}
-
-/* Footer wears the hero's palette so the page ends in the same world it opens
-   with. Remapping the menu tokens here restyles the footer's cards, badges and
-   heading without each component needing a hero variant. */
-.footer-hero {
-  --color-menu-ink: var(--hero-sky);
-  --color-menu-panel: color-mix(in srgb, var(--hero-sky), var(--hero-ink) 7%);
-  --color-menu-rule: var(--hero-rule);
-  --color-menu-text: var(--hero-ink);
-  --color-menu-muted: var(--hero-ink-muted);
-}
-
-html {
-  /* Override next/font variables so .font-serif / .font-sans / .font-mono all resolve to Space Grotesk */
-  --font-serif: var(--font-figtree), sans-serif !important;
-  --font-sans: var(--font-figtree), sans-serif !important;
-  --font-mono: var(--font-figtree), sans-serif !important;
 }
 
 html,
 body {
   background: var(--color-bg);
   color: var(--color-fg);
-  font-family: var(--font-figtree), sans-serif;
+  font-family: var(--font-family-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -191,10 +109,10 @@ body {
 body {
   min-height: 100dvh;
   overflow-x: hidden;
-  background: var(--color-bg);
 }
 
-/* Grainy paper texture overlay */
+/* Grainy paper texture overlay — keeps the warm ground from reading as flat
+   digital white at display type sizes. */
 body::before {
   content: "";
   position: fixed;
@@ -224,34 +142,27 @@ body::before {
   border-radius: 2px;
 }
 
-/* Status pulse — soft green glow for "Available for work" / "Live" */
-@keyframes status-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 6px 3px rgba(34, 197, 94, 0.25);
-  }
+/* ── Dither screen ──
+   A halftone dot grid over whatever gradient the element sets as its own
+   background. Applied to a pseudo-element so the host keeps full control of
+   its gradient, and so the screen never scales with the element's content.
+
+   The dot is drawn at a fixed sub-pixel radius against a transparent cell:
+   at --dither-cell 5px this reads as a print screen rather than a texture,
+   and it costs no image request. */
+.dither::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle at 1px 1px, var(--dither-dot) 1px, transparent 1.4px);
+  background-size: var(--dither-cell) var(--dither-cell);
 }
 
-/* Drop-cap for editorial section intros */
-.drop-cap::first-letter {
-  font-family: var(--font-figtree), sans-serif !important;
-  font-size: 3.5em;
-  line-height: 0.8;
-  padding-right: 0.1em;
-  margin-top: 0.05em;
-  background: var(--gradient-gold);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Gold-leaf scrollbar */
+/* Scrollbar */
 html {
   scrollbar-width: thin;
-  scrollbar-color: #d97706 transparent;
+  scrollbar-color: var(--color-accent-hi) transparent;
 }
 
 ::-webkit-scrollbar {
@@ -263,239 +174,26 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #fbbf24, #d97706);
+  background: var(--color-accent-hi);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #fcd34d, #f59e0b);
+  background: var(--color-accent);
 }
 
-/* Mana ember shimmer for scroll path */
-@keyframes mana-shimmer {
-  0% {
-    opacity: 0;
-    transform: translateY(0) scale(1);
+/* Status pulse — soft green glow for "Available for work" / "Live" */
+@keyframes status-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5);
   }
   50% {
-    opacity: 0.9;
-    transform: translateY(-8px) scale(1.3);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-16px) scale(0.8);
+    box-shadow: 0 0 6px 3px rgba(34, 197, 94, 0.25);
   }
 }
 
-/* Chatbot sprite talking animation
-   Frame offset = displayed width of one frame.
-   At DISPLAY_H=80, aspect 689:751, displayed width ≈ 73.4px */
-@keyframes sprite-talk {
-  0%,
-  100% {
-    background-position: 0 0;
-  }
-  50% {
-    background-position: -73.4px 0;
-  }
-}
-
-.chatbot-sprite-frame.talking {
-  animation: sprite-talk 0.25s steps(1) infinite;
-}
-
-/* Atmospheric dust drift animation */
-@keyframes dust-drift {
-  0% {
-    transform: translateY(0) translateX(0);
-    opacity: 0;
-  }
-  15% {
-    opacity: 0.6;
-  }
-  85% {
-    opacity: 0.4;
-  }
-  100% {
-    transform: translateY(-150px) translateX(30px);
-    opacity: 0;
-  }
-}
-
-/* Gentle floating drift for contact icons — use CSS custom property
-   --float-duration and --float-delay per element for organic stagger */
-@keyframes icon-float {
-  0% {
-    transform: translateY(0px) translateX(0px);
-  }
-  25% {
-    transform: translateY(-8px) translateX(4px);
-  }
-  50% {
-    transform: translateY(-2px) translateX(-5px);
-  }
-  75% {
-    transform: translateY(-10px) translateX(2px);
-  }
-  100% {
-    transform: translateY(0px) translateX(0px);
-  }
-}
-
-/* Neon audio visualizer pulse for Work page modal */
-@keyframes neon-pulse {
-  0% {
-    transform: scaleY(var(--min-scale, 0.2));
-    opacity: 0.5;
-  }
-  100% {
-    transform: scaleY(var(--max-scale, 1));
-    opacity: 1;
-  }
-}
-
-/* Border beam — rotating conic gradient edge effect */
-@property --border-angle {
-  syntax: "<angle>";
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes border-beam {
-  to {
-    --border-angle: 360deg;
-  }
-}
-
-.border-beam {
-  position: relative;
-}
-
-.border-beam::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: conic-gradient(
-    from var(--border-angle),
-    transparent 70%,
-    var(--color-accent) 80%,
-    var(--color-accent-hi) 90%,
-    transparent 100%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: border-beam 4s linear infinite;
-  pointer-events: none;
-}
-
-/* Pixel coding scene — typing animation */
-@keyframes pixel-typing {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  25% {
-    transform: translateY(-1px);
-  }
-  50% {
-    transform: translateY(0);
-  }
-  75% {
-    transform: translateY(-1px);
-  }
-}
-
-/* Hero scroll cue — gentle downward bob */
-@keyframes scroll-cue {
-  0%,
-  100% {
-    transform: translateY(0);
-    opacity: 0.5;
-  }
-  50% {
-    transform: translateY(5px);
-    opacity: 1;
-  }
-}
-
-/* Retro menu — buttons slide in from the left, fading as they travel.
-   Easing is set at the call site: cubic-bezier(0.16, 1, 0.3, 1). */
-@keyframes retro-menu-slide {
-  from {
-    transform: translateX(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-/* Hero name — blinking block caret, hard on/off like a terminal */
-@keyframes pixel-caret {
-  0%,
-  49% {
-    opacity: 1;
-  }
-  50%,
-  100% {
-    opacity: 0;
-  }
-}
-
-/* Menu card — settles up into place as the section arrives */
-@keyframes retro-card-in {
-  from {
-    transform: translateY(18px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Pixel scene — blocks materialise, coarse squares resolving into the art */
-@keyframes pixel-block-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-/* Pixel scene — eyes shut for a beat */
-@keyframes pixel-blink {
-  0%,
-  93%,
-  100% {
-    opacity: 1;
-  }
-  95%,
-  97% {
-    opacity: 0;
-  }
-}
-
-/* Pixel scene — hologram breathes like a live display */
-@keyframes holo-flicker {
-  0%,
-  100% {
-    opacity: 0.58;
-  }
-  45% {
-    opacity: 0.68;
-  }
-  70% {
-    opacity: 0.52;
-  }
-}
-
-/* Projects — halves arrive from opposite sides and meet in the middle */
+/* Project rows on /projects — halves arrive from opposite sides and meet in the middle */
 @keyframes project-in-left {
   from {
     transform: translateX(-32px);
@@ -518,42 +216,6 @@ html {
   }
 }
 
-/* Section hand-off — a whole block rising into place. Longer travel than
-   project-in-up, which is sized for individual cards rather than a section. */
-@keyframes section-slide-in {
-  from {
-    transform: translateY(48px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes project-in-up {
-  from {
-    transform: translateY(16px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* Section rule — draws outward from nothing */
-@keyframes section-rule-in {
-  from {
-    transform: scaleX(0);
-    opacity: 0;
-  }
-  to {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-}
-
 /* Dialogue-box typing — each character pops at its own delay */
 @keyframes type-in {
   from {
@@ -564,62 +226,16 @@ html {
   }
 }
 
-/* Checkpoint flags — cloth snaps between two positions, no easing */
-@keyframes flag-wave {
+/* Blinking block caret, hard on/off like a terminal */
+@keyframes pixel-caret {
   0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
   100% {
-    transform: scaleX(1);
+    opacity: 0;
   }
-  50% {
-    transform: scaleX(0.72);
-  }
-}
-
-/* Ascent route — dashes crawl uphill. Travel is exactly one dash + one gap
-   (1.6 + 2 in the mountain's viewBox units), so the loop is seamless. */
-@keyframes route-march {
-  from {
-    stroke-dashoffset: 0;
-  }
-  to {
-    stroke-dashoffset: -3.6;
-  }
-}
-
-/* 3D keyboard keycap — pixel-style raised key with press effect.
-   Each key sets --keycap-color to its brand hue for the hover glow. */
-.keycap {
-  --keycap-color: var(--color-accent);
-  box-shadow: 0 3px 0 0 var(--color-border-strong), 0 4px 0 0 var(--color-border), 0 5px 8px -2px
-    rgba(0, 0, 0, 0.12);
-}
-
-.keycap:hover {
-  border-color: color-mix(in srgb, var(--keycap-color) 40%, var(--color-border-strong));
-  box-shadow: 0 1px 0 0 var(--color-border-strong), 0 1px 0 0 var(--color-border), 0 4px 14px -2px
-    color-mix(in srgb, var(--keycap-color) 30%, transparent);
-}
-
-.keycap:active {
-  translate: 0 4px;
-  box-shadow: 0 0 0 0 var(--color-border-strong), 0 0 0 0 var(--color-border), 0 1px 2px 0
-    rgba(0, 0, 0, 0.05);
-}
-
-.dark .keycap {
-  box-shadow: 0 3px 0 0 var(--color-border-strong), 0 4px 0 0 var(--color-border), 0 5px 8px -2px
-    rgba(0, 0, 0, 0.4);
-}
-
-.dark .keycap:hover {
-  border-color: color-mix(in srgb, var(--keycap-color) 50%, var(--color-border-strong));
-  box-shadow: 0 1px 0 0 var(--color-border-strong), 0 1px 0 0 var(--color-border), 0 4px 18px -2px
-    color-mix(in srgb, var(--keycap-color) 35%, transparent);
-}
-
-.dark .keycap:active {
-  box-shadow: 0 0 0 0 var(--color-border-strong), 0 0 0 0 var(--color-border), 0 1px 2px 0
-    rgba(0, 0, 0, 0.2);
 }
 
 /* Global reduced-motion override */

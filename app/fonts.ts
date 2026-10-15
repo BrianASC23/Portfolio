@@ -1,5 +1,27 @@
-import { Figtree } from 'next/font/google';
+import { Libre_Baskerville } from 'next/font/google';
 import localFont from 'next/font/local';
+
+/**
+ * The homepage statement, and nothing else.
+ *
+ * Libre Baskerville is drawn for body copy at reading sizes, so it carries a
+ * large x-height and wide letterforms. At display sizes that reads as weight
+ * rather than elegance, which is why the statement caps lower and leads looser
+ * than it did under Instrument Serif — see `--text-display` in globals.css.
+ */
+export const fontDisplay = Libre_Baskerville({
+  subsets: ['latin'],
+  weight: ['400'],
+  style: ['normal', 'italic'],
+  variable: '--font-display',
+  display: 'swap',
+  preload: true,
+  // No explicit `fallback` list: passing one replaces next/font's generated
+  // metric-adjusted fallback, and without that the statement reflowed 73px
+  // when the real face swapped in — the hero element shoving the whole page
+  // down on load. The generated fallback is size-adjusted to match, so the
+  // swap is invisible.
+});
 
 export const fontSerif = localFont({
   src: [
@@ -26,12 +48,4 @@ export const fontMono = localFont({
   display: 'swap',
   preload: false,
   fallback: ['ui-monospace', 'SFMono-Regular', 'monospace'],
-});
-
-export const fontFigtree = Figtree({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-figtree',
-  display: 'swap',
-  fallback: ['sans-serif'],
 });

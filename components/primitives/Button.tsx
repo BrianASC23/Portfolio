@@ -22,7 +22,7 @@ export type ButtonProps = ButtonAsButton | ButtonAsLink;
 
 const variantClasses: Record<Variant, string> = {
   primary:
-    'bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[var(--color-accent-hi)] shadow-[var(--shadow-glow)]',
+    'bg-[var(--color-accent)] text-[var(--color-bg)] hover:bg-[var(--color-accent-lo)] shadow-[var(--shadow-glow)]',
   secondary:
     'bg-[var(--color-bg-elevated)] text-[var(--color-fg)] border border-[var(--color-border)] hover:border-[var(--color-accent)]',
   ghost: 'text-[var(--color-fg)] hover:text-[var(--color-accent)]',

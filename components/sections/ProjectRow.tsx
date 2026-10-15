@@ -2,11 +2,10 @@
 
 import { fontMono } from '@/app/fonts';
 import { PixelArrow } from '@/components/ui/PixelArrow';
+import { useInViewOnce } from '@/lib/hooks/useInViewOnce';
 import type { Project } from '@/lib/schemas/project';
-import { useInView } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRef } from 'react';
 import { TypeLine } from './TypeLine';
 
 /** Expo-out, matching the retro menu so the page shares one motion language. */
@@ -43,8 +42,7 @@ function projectHref(project: Project): string {
  * itself out.
  */
 export function ProjectRow({ project }: { project: Project }) {
-  const ref = useRef<HTMLElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-15% 0px' });
+  const [ref, inView] = useInViewOnce<HTMLElement>();
 
   const image = project.homeCover ?? project.cover.src;
   const href = projectHref(project);
@@ -124,9 +122,9 @@ export function ProjectRow({ project }: { project: Project }) {
         href={href}
         {...external}
         aria-label={`${project.title} — view project`}
-        className="group relative block aspect-[16/10] overflow-hidden border-2 border-[var(--color-menu-ink)] bg-[var(--color-bg-inset)]"
+        className="group relative block aspect-[16/10] overflow-hidden border-2 border-[var(--color-fg)] bg-[var(--color-bg-inset)]"
         style={{
-          boxShadow: '6px 6px 0px var(--color-menu-ink)',
+          boxShadow: '6px 6px 0px var(--color-fg)',
           ...enter('project-in-right', 0.12),
         }}
       >
