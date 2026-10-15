@@ -1,5 +1,6 @@
 'use client';
 
+import { Mark } from '@/components/brand/Mark';
 import { NAV_LINKS } from '@/lib/nav';
 import { cn } from '@/lib/utils/cn';
 import Link from 'next/link';
@@ -33,7 +34,7 @@ export function TopBar() {
       )}
     >
       <Link href="/" className="flex items-center gap-2.5 md:mb-14">
-        <span aria-hidden="true" className="block h-2.5 w-2.5 bg-[var(--color-accent-hi)]" />
+        <Mark className="block h-3.5 w-3.5 shrink-0 text-[var(--color-accent)]" />
         <span className="text-sm font-medium tracking-[-0.01em] text-[var(--color-fg-muted)]">
           Brian Cao
         </span>

@@ -23,7 +23,7 @@ function Meta({ label, children }: { label: string; children: string }) {
 function NameBubble({ name }: { name: string }) {
   return (
     <span className="whitespace-nowrap">
-      <Mark className="mr-[0.1em] inline-block h-[0.26em] w-[0.26em] translate-y-[-0.42em] text-[var(--color-accent)]" />
+      <Mark className="mr-[0.1em] inline-block h-[0.38em] w-[0.38em] translate-y-[-0.38em] text-[var(--color-accent)]" />
       <span className="rounded-[0.22em] bg-[var(--color-accent)] px-[0.14em] pb-[0.05em] text-[var(--color-bg)] [box-decoration-break:clone] [-webkit-box-decoration-break:clone]">
         {name}
       </span>
