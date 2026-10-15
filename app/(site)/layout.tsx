@@ -11,7 +11,8 @@ export default function SiteLayout({ children }: { children: ReactNode }) {
       <StructuredData />
       <TopBar />
       <CommandPaletteLazy />
-      <main id="main" className="relative z-10 pt-14">
+      {/* Offsets the fixed rail from `md` up, and the mobile bar below it. */}
+      <main id="main" className="relative z-10 pt-16 md:pt-0 md:pl-56">
         {children}
       </main>
       <Footer />

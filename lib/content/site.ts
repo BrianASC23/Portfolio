@@ -12,6 +12,13 @@ const bioFrontmatter = z.object({
   headline: z.string().optional(),
   location: z.string().optional(),
   school: z.string().optional(),
+  /** The oversized serif sentence that opens the homepage. */
+  statement: z.string().min(1),
+  /** Two columns of standing context under the statement. */
+  currently: z.string().min(1),
+  previously: z.string().min(1),
+  /** Footer standing line — where he is and what he is open to. */
+  availability: z.string().min(1),
 });
 
 export type BioFrontmatter = z.infer<typeof bioFrontmatter>;
