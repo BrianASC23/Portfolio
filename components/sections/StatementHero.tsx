@@ -25,7 +25,10 @@ export function StatementHero() {
   return (
     <section aria-label="Introduction" className="pt-28 pb-16 md:pt-40 md:pb-24">
       <Container size="wide">
-        <h1 className="max-w-[15ch] font-serif text-[length:var(--text-display)] leading-[1.04] tracking-[-0.02em] text-[var(--color-fg)]">
+        {/* 18ch is the tightest measure that still breaks to three lines in
+            Libre Baskerville; narrower runs to four, wider saturates at the
+            text's natural width and loses the rag. */}
+        <h1 className="max-w-[18ch] font-[family-name:var(--font-family-display)] text-[length:var(--text-display)] leading-[1.14] tracking-[-0.015em] text-[var(--color-fg)]">
           {frontmatter.statement}
         </h1>
 

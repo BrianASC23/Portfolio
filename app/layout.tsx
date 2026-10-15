@@ -1,4 +1,4 @@
-import { fontMono, fontSans, fontSerif } from '@/app/fonts';
+import { fontDisplay, fontMono, fontSans, fontSerif } from '@/app/fonts';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import { SmoothScroll } from '@/components/scroll/SmoothScroll';
 import { publicEnv } from '@/lib/env';
@@ -40,7 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${fontSerif.variable} ${fontSans.variable} ${fontMono.variable}`}
+      className={`${fontSerif.variable} ${fontSans.variable} ${fontMono.variable} ${fontDisplay.variable}`}
       suppressHydrationWarning
     >
       <body>

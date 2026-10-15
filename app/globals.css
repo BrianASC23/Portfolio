@@ -47,15 +47,17 @@
   /* Typography families (wired from next/font variables in app/fonts.ts).
      Three faces, three jobs: Instrument Serif for display, Inter for body and
      UI, JetBrains Mono for eyebrows, metadata and stack tags. */
+  --font-family-display: var(--font-display), Georgia, ui-serif, serif;
   --font-family-serif: var(--font-serif), Georgia, ui-serif, serif;
   --font-family-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-family-mono: var(--font-mono), ui-monospace, SFMono-Regular, monospace;
 
-  /* Fluid type scale — oversized display for editorial serif headings.
-     Display tops out at 92px rather than 128px: the statement runs to three
-     lines at that size in a 15ch measure, which is the proportion the layout
-     is built around. */
-  --text-display: clamp(2.75rem, 1.9rem + 4.6vw, 5.75rem);
+  /* Fluid type scale.
+     Display is sized for Libre Baskerville, which is a body face: its large
+     x-height makes it read a size larger than a display serif would at the
+     same value, so it tops out at 76px rather than the 92px Instrument Serif
+     wanted. Everything below still belongs to Instrument Serif. */
+  --text-display: clamp(2.375rem, 1.7rem + 3.5vw, 4.75rem);
   --text-h1: clamp(2.5rem, 1.8rem + 3.5vw, 4.5rem);
   --text-h2: clamp(2rem, 1.5rem + 2.5vw, 3.25rem);
   --text-h3: clamp(1.25rem, 1rem + 1.2vw, 1.75rem);
