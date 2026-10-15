@@ -16,7 +16,11 @@ export const fontDisplay = Libre_Baskerville({
   variable: '--font-display',
   display: 'swap',
   preload: true,
-  fallback: ['Georgia', 'ui-serif', 'serif'],
+  // No explicit `fallback` list: passing one replaces next/font's generated
+  // metric-adjusted fallback, and without that the statement reflowed 73px
+  // when the real face swapped in — the hero element shoving the whole page
+  // down on load. The generated fallback is size-adjusted to match, so the
+  // swap is invisible.
 });
 
 export const fontSerif = localFont({
