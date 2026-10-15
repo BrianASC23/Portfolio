@@ -11,11 +11,11 @@ const MAX_HOME_EXPERIENCES = 4;
 /**
  * Professional experience as a two-pane vertical timeline.
  *
- * `getAllExperiences` sorts newest first for list views; a timeline reads
- * chronologically, so the most recent few are taken and then reversed.
+ * Newest first, matching /experience and the resume, so the latest role is the
+ * first thing the climber reaches.
  */
 export function ExperienceTimelineSection() {
-  const items = getAllExperiences().slice(0, MAX_HOME_EXPERIENCES).reverse();
+  const items = getAllExperiences().slice(0, MAX_HOME_EXPERIENCES);
 
   if (items.length < 2) return null;
 

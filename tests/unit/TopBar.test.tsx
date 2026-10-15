@@ -14,7 +14,7 @@ describe('TopBar', () => {
     expect(screen.getByRole('link', { name: /^home$/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /^projects$/i })).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /^writing$/i })).toBeInTheDocument();
-    expect(screen.getByRole('link', { name: /^resume$/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /^resume$/i })).toHaveAttribute('href', '/resume');
   });
 
   it('renders the Contact pill CTA linking to the contact page', () => {
