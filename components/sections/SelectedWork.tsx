@@ -13,7 +13,9 @@ import Link from 'next/link';
  */
 function caption(project: Project): string {
   const [metric] = project.metrics;
-  if (metric) return `${metric.value} ${metric.label.toLowerCase()}`;
+  // The label is used as authored rather than lower-cased: these carry
+  // acronyms ("Gene-ID accuracy"), and folding the case mangles them.
+  if (metric) return `${metric.value} ${metric.label}`;
   return project.stack.slice(0, 2).join(' · ');
 }
 
