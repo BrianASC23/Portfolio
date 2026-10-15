@@ -1,101 +1,64 @@
-'use client';
-
-import { fontMono } from '@/app/fonts';
 import { Container } from '@/components/primitives/Container';
-import { useInView } from 'framer-motion';
-import { useRef } from 'react';
-import { SectionIntro } from './SectionIntro';
-import { SKILL_GROUPS, type Skill, type SkillGroup } from './skills-data';
+import { SKILL_GROUPS, type SkillGroup } from './skills-data';
 
-const EASING = 'cubic-bezier(0.16, 1, 0.3, 1)';
-/** Per-key stagger inside a group; each group runs its own sequence as it arrives. */
-const KEY_STAGGER = 0.035;
+/**
+ * One category as a row: mono label left of a hairline-ruled list of names.
+ *
+ * The middot separator is the same one `SelectedWork` sets between a project
+ * and its caption, in the same hairline tone, so the two sections read as one
+ * system. It trails its word inside a nowrap span, which keeps a wrapped line
+ * from opening on a dangling separator.
+ */
+function SkillRow({ group }: { group: SkillGroup }) {
+  const last = group.skills.length - 1;
 
-/** Skills: one keyboard row per category, from specializations down to languages. */
-export function SkillsSection() {
   return (
-    <section aria-label="Skills" className="pb-24 pt-12 md:pb-32 md:pt-16">
-      <Container size="wide">
-        <SectionIntro title="Skills" />
-
-        <div className="mx-auto mt-14 flex max-w-[1180px] flex-col gap-10 md:mt-16 md:gap-12">
-          {SKILL_GROUPS.map((group) => (
-            <SkillGroupRow key={group.id} group={group} />
-          ))}
-        </div>
-      </Container>
-    </section>
+    <div className="grid gap-x-8 gap-y-2 border-t border-[var(--color-border)] py-5 sm:grid-cols-[11rem_minmax(0,1fr)]">
+      <dt className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--color-fg-subtle)] sm:pt-1">
+        {group.label}
+      </dt>
+      <dd className="m-0 flex flex-wrap items-baseline gap-x-2 gap-y-1.5 text-[15px] leading-relaxed text-[var(--color-fg-muted)]">
+        {group.skills.map((skill, i) => (
+          <span key={skill} className="whitespace-nowrap">
+            {skill}
+            {i < last && (
+              <span aria-hidden="true" className="ml-2 text-[var(--color-border-strong)]">
+                ·
+              </span>
+            )}
+          </span>
+        ))}
+      </dd>
+    </div>
   );
 }
 
 /**
- * One category as a horizontal row: label on the left, an amber bar, then its
- * keys running left to right. Stacked on a phone, the bar sits under the label.
+ * Skills, as a list rather than a keyboard.
+ *
+ * This used to be rows of raised 3D keys in per-skill brand colours. The grid was
+ * the loudest thing on a page whose argument is made in type, and it read as
+ * decoration rather than as credentials. Names on hairlines say the same thing
+ * in a quarter of the space, and the section is static markup — no icons, no
+ * client JavaScript.
  */
-function SkillGroupRow({ group }: { group: SkillGroup }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: '-10% 0px' });
-
-  const enter = (delay: number) =>
-    inView ? { animation: `project-in-up 0.6s ${EASING} ${delay}s both` } : { opacity: 0 };
-
+export function SkillsSection() {
   return (
-    <div ref={ref} className="flex flex-col gap-5 md:flex-row md:items-center md:gap-8">
-      <h3
-        className={`shrink-0 border-b-2 border-[var(--color-accent)] pb-3 text-xs uppercase leading-relaxed tracking-[0.28em] text-[var(--color-fg-muted)] md:w-44 md:self-stretch md:border-r-2 md:border-b-0 md:pr-8 md:pb-0 md:text-right md:flex md:items-center md:justify-end ${fontMono.className}`}
-        style={enter(0)}
-      >
-        {group.label}
-      </h3>
+    <section id="skills" aria-labelledby="skills-heading" className="scroll-mt-20 pb-24 md:pb-32">
+      <Container size="wide">
+        <h2
+          id="skills-heading"
+          className="border-t border-[var(--color-border)] pt-5 font-mono text-[11px] font-normal uppercase tracking-[0.14em] text-[var(--color-fg-subtle)]"
+        >
+          Skills
+        </h2>
 
-      <ul className="flex list-none flex-wrap gap-3">
-        {group.skills.map((skill, i) => (
-          <li key={skill.name} className={group.wide ? '' : 'w-[4.75rem]'}>
-            <Keycap skill={skill} wide={group.wide} style={enter(0.08 + i * KEY_STAGGER)} />
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-function Keycap({
-  skill,
-  wide = false,
-  style,
-}: {
-  skill: Skill;
-  wide?: boolean;
-  style?: React.CSSProperties;
-}) {
-  const Icon = skill.icon;
-  const legend = wide ? skill.name : (skill.key ?? skill.name);
-
-  return (
-    <div
-      title={skill.name}
-      className={`keycap group flex h-full cursor-default items-center justify-center rounded-[4px] border border-[var(--color-border-strong)] bg-[var(--color-bg-elevated)] transition-all duration-100 select-none hover:translate-y-[3px] ${
-        wide ? 'flex-row gap-2 px-3 py-3' : 'flex-col gap-2 px-3 py-4'
-      }`}
-      style={{ ...style, '--keycap-color': skill.color } as React.CSSProperties}
-    >
-      <Icon
-        aria-hidden="true"
-        className={`shrink-0 drop-shadow-sm transition-[transform,filter] duration-150 group-hover:scale-110 ${
-          wide ? 'h-5 w-5' : 'h-7 w-7'
-        }`}
-        style={{ color: skill.color }}
-      />
-      <span
-        className={`uppercase text-[var(--color-fg-subtle)] transition-colors duration-150 group-hover:text-[var(--color-fg)] ${
-          wide
-            ? 'whitespace-nowrap text-[11px] tracking-[0.06em]'
-            : 'text-center text-[10px] tracking-[0.14em]'
-        } ${fontMono.className}`}
-      >
-        <span className="sr-only">{skill.name}</span>
-        <span aria-hidden="true">{legend}</span>
-      </span>
-    </div>
+        <dl className="mt-8 md:mt-10">
+          {SKILL_GROUPS.map((group) => (
+            <SkillRow key={group.id} group={group} />
+          ))}
+        </dl>
+      </Container>
+    </section>
   );
 }
