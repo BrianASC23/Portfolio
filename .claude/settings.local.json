@@ -28,7 +28,11 @@
       "Bash(tail:*)",
       "Bash(find:*)",
       "WebFetch(domain:ashimrudrapaul.com)",
-      "Bash(cd /c/Users/bcfra/Projects/Portfolio/Portfolio && npx tsc --noEmit 2>&1)"
+      "Bash(cd /c/Users/bcfra/Projects/Portfolio/Portfolio && npx tsc --noEmit 2>&1)",
+      "Bash(grep:*)",
+      "Bash(cd /c/Users/bcfra/Projects/Portfolio/Portfolio && rm -rf .worktrees/redesign && git branch -d feature/portfolio-redesign 2>&1)",
+      "Bash(cd /c/Users/bcfra/Projects/Portfolio/Portfolio && rm public/fonts/JetBrainsMono-Variable.woff2 2>&1)",
+      "WebSearch"
     ]
   }
 }

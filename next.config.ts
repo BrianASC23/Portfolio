@@ -5,8 +5,20 @@ const withBundleAnalyzer = bundleAnalyzer({ enabled: process.env.ANALYZE === 'tr
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  eslint: {
+    /**
+     * Biome is this project's linter — `pnpm lint` runs `biome check .`, and it
+     * gates commits through lint-staged. The ESLint config here is vestigial
+     * and does not load against the flat-config shape eslint-config-next now
+     * ships, so letting the build run it only prints an error on every build
+     * and in CI. Lint runs as its own step, not as a side effect of building.
+     */
+    ignoreDuringBuilds: true,
+  },
   experimental: {
-    optimizePackageImports: ['framer-motion', '@react-three/drei', 'cmdk'],
+    // `@react-three/drei` was listed here for a 3D hero that was never built;
+    // the package is not a dependency.
+    optimizePackageImports: ['framer-motion', 'cmdk'],
     mdxRs: false,
   },
   images: {

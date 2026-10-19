@@ -40,7 +40,7 @@ export function Section({
                 {title}
                 <span
                   className="absolute -bottom-2 left-0 h-[3px] w-full rounded-full"
-                  style={{ background: 'var(--gradient-gold)' }}
+                  style={{ background: 'var(--gradient-accent)' }}
                 />
               </h2>
             )}

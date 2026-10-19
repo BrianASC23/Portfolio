@@ -3,8 +3,6 @@ export interface NavLink {
   label: string;
   /** Show only in the mobile menu, not the desktop navbar. */
   mobileOnly?: boolean;
-  /** Trigger a file download instead of client-side navigation. */
-  download?: boolean;
 }
 
 export const NAV_LINKS: NavLink[] = [
@@ -12,7 +10,7 @@ export const NAV_LINKS: NavLink[] = [
   { href: '/projects', label: 'Projects' },
   { href: '/experience', label: 'Work' },
   { href: '/writing', label: 'Writing' },
-  { href: '/resume/BrianCao-Resume.pdf', label: 'Resume', download: true },
+  { href: '/resume', label: 'Resume' },
 ];
 
 export const CONTACT_EMAIL = 'brianc40722@gmail.com';
